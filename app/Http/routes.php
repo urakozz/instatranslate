@@ -11,6 +11,4 @@
 |
 */
 
-use Illuminate\Routing\Route;
-
 Route::get('/', 'WelcomeController@index');

@@ -14,7 +14,11 @@ echo "mysql-server mysql-server/root_password password root" | debconf-set-selec
 echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
  
 sudo apt-get install -y mysql-server mysql-client
- 
+mysql -uroot -proot -e "CREATE DATABASE laravel"
+
+sed -i 's/user = www-data/user = vagrant/g' /etc/php5/fpm/pool.d/www.conf
+sed -i 's/group = www-data/group = vagrant/g' /etc/php5/fpm/pool.d/www.conf
+service php5-fpm restart
  
 apt-get install -y language-pack-UTF-8
 apt-get install -y nginx
