@@ -9,26 +9,32 @@ sudo apt-get update
 sudo apt-get install -y git php5-dev php5-memcached php5-common \
 php5-json php5-cli php5-cgi php5-gmp php5-fpm php5 php5-curl php5-intl \
 php5-xsl php5-mysqlnd php5-mcrypt php5-readline php5-gd
+
+sudo apt-get install -y npm
  
 echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
 echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
  
 sudo apt-get install -y mysql-server mysql-client
-mysql -uroot -proot -e "CREATE DATABASE laravel"
+mysql -uroot -proot -e "CREATE DATABASE if not exists laravel"
 
 sed -i 's/user = www-data/user = vagrant/g' /etc/php5/fpm/pool.d/www.conf
 sed -i 's/group = www-data/group = vagrant/g' /etc/php5/fpm/pool.d/www.conf
 service php5-fpm restart
 
-curl -sS https://getcomposer.org/installer | php
-mv composer.phar /usr/bin/composer
+if [ ! -e /usr/bin/composer ]; then
+    curl -sS https://getcomposer.org/installer | php
+    mv composer.phar /usr/bin/composer
+fi
+/usr/bin/composer self-update
+
 (cd /vagrant && /usr/bin/composer install)
  
 apt-get install -y language-pack-UTF-8
 apt-get install -y nginx
 rm -rf /etc/nginx/sites-enabled/default
 cp /vagrant/.provision/instagram_project.conf /etc/nginx/sites-available/instagram_project.conf
-ln -s /etc/nginx/sites-available/instagram_project.conf /etc/nginx/sites-enabled/instagram_project.conf
+ln -sf /etc/nginx/sites-available/instagram_project.conf /etc/nginx/sites-enabled/instagram_project.conf
  
 service nginx restart
  
