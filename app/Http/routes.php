@@ -12,6 +12,8 @@
 */
 
 Route::get('/', 'WelcomeController@index');
-Route::get('user/{id}', function($id){
+
+Route::get('user/{id}', function($id)
+{
     return "User $id";
 });
