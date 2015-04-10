@@ -1,10 +1,12 @@
 <html>
 	<head>
 		<title>InstaTranslate</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-        <!-- подключение стилей -->
         <link href="/css/app.css" rel="stylesheet">
 		<link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
+		<script async src="/js/app.js"></script>
 
 	</head>
 
@@ -19,5 +21,4 @@
 			</div>
 		</div>
 	</body>
-<script language="JavaScript" src="/js/app.js"></script>
 </html>

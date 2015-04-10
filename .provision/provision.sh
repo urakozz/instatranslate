@@ -11,6 +11,8 @@ php5-json php5-cli php5-cgi php5-gmp php5-fpm php5 php5-curl php5-intl \
 php5-xsl php5-mysqlnd php5-mcrypt php5-readline php5-gd
 
 sudo apt-get install -y npm
+ln -sf /usr/bin/nodejs /usr/bin/node
+
  
 echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
 echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
@@ -35,6 +37,7 @@ apt-get install -y nginx
 rm -rf /etc/nginx/sites-enabled/default
 cp /vagrant/.provision/instagram_project.conf /etc/nginx/sites-available/instagram_project.conf
 ln -sf /etc/nginx/sites-available/instagram_project.conf /etc/nginx/sites-enabled/instagram_project.conf
+sed -i 's/sendfile on/sendfile off/g' /etc/nginx/nginx.conf
  
 service nginx restart
  
