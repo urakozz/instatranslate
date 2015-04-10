@@ -1,5 +1,9 @@
 var elixir = require('laravel-elixir');
 
+var paths = {
+ 'jquery': './resources/assets/vendor/jquery/',
+ 'bootstrap': './resources/assets/vendor/bootstrap-sass-official/assets/'
+};
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -12,5 +16,11 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.less('app.less');
+ mix
+     .sass("app.scss", 'public/css/', {includePaths: [paths.bootstrap + 'stylesheets']})
+     .copy(paths.bootstrap + 'fonts/bootstrap/**', 'public/fonts')
+     .scripts([
+      paths.jquery + "dist/jquery.js",
+      paths.bootstrap + "javascripts/bootstrap.js"
+     ], 'public/js/app.js', './');
 });

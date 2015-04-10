@@ -3,8 +3,7 @@
 		<title>InstaTranslate</title>
 
         <!-- подключение стилей -->
-        <link href="css/bootstrap.css" rel="stylesheet">
-        <link href="css/style.css" rel="stylesheet">
+        <link href="/css/app.css" rel="stylesheet">
 		<link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
 
 	</head>
@@ -20,4 +19,5 @@
 			</div>
 		</div>
 	</body>
+<script language="JavaScript" src="/js/app.js"></script>
 </html>
