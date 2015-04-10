@@ -19,6 +19,10 @@ mysql -uroot -proot -e "CREATE DATABASE laravel"
 sed -i 's/user = www-data/user = vagrant/g' /etc/php5/fpm/pool.d/www.conf
 sed -i 's/group = www-data/group = vagrant/g' /etc/php5/fpm/pool.d/www.conf
 service php5-fpm restart
+
+curl -sS https://getcomposer.org/installer | php
+mv composer.phar /usr/bin/composer
+(cd /vagrant && /usr/bin/composer install)
  
 apt-get install -y language-pack-UTF-8
 apt-get install -y nginx
