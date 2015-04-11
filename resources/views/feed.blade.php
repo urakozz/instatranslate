@@ -20,10 +20,10 @@
 	</head>
 
 
-    <body class="promo">
-		<div class="promo container">
-			<div class="promo content">
-				<div class="promo title">Your wall here, {{ $user->getFullName() }}</div>
+    <body>
+		<div class="container">
+			<div class="content">
+				<div class="title">Your wall here, {{ $user->getFullName() }}</div>
 				<img src="{{ $user->getProfilePicture() }}">
 			</div>
 
