@@ -20,13 +20,11 @@
 	</head>
 
 
-    <body  class="promo">
+    <body class="promo">
 		<div class="promo container">
 			<div class="promo content">
-				<div class="promo title">Welcome to instatranslate</div>
-				<div class="promo quote">
-                    <a role="button" class="btn btn-success btn-lg it-button" href="{{ $link }}">Try now. For free. Forever.</a>
-                </div>
+				<div class="promo title">Your wall here, {{ $user->getFullName() }}</div>
+				<img src="{{ $user->getProfilePicture() }}">
 			</div>
 
 		</div>

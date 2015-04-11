@@ -3,3 +3,5 @@
 /vendor
 /node_modules
 .env
+_ide_helper.php
+oculus.phar

@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-class WelcomeController extends Controller {
+class WallController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -29,11 +29,19 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-		if(\Session::get('user')){
-			return redirect("/wall");
+		try{
+			$user = \Session::get('user');
+			$user = @unserialize($user);
+			if(!$user instanceof \App\User){
+				throw new \DomainException("Unable unserialize");
+			}
+			\Auth::setUser($user);
+
+		}catch (\Exception $e){
+			\Session::clear();
+			return redirect("/");
 		}
-		$link = sprintf("https://api.instagram.com/oauth/authorize/?client_id=%s&redirect_uri=%s&response_type=code", env("I_CLIENT_ID"), \URL::to('/auth'));
-		return view('index', ['link' => $link]);
+		return view('wall',['user'=>$user]);
 	}
 
 }

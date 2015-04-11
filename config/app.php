@@ -26,7 +26,7 @@ return [
 	|
 	*/
 
-	'url' => 'http://localhost',
+	'url' => env('APP_HOST', 'http://localhost'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -144,6 +144,8 @@ return [
 		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
+
+		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider'
 
 	],
 

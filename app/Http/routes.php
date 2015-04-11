@@ -13,7 +13,6 @@
 
 Route::get('/', 'WelcomeController@index');
 
-Route::get('user/{id}', function($id)
-{
-    return "User $id";
-});
+Route::get('auth', 'AuthController@resolve');
+Route::get('logout', 'AuthController@logout');
+Route::get('wall', 'WallController@index');
