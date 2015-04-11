@@ -2,7 +2,7 @@ var elixir = require('laravel-elixir');
 
 var paths = {
  'jquery': './resources/assets/vendor/jquery/',
- 'bootstrap': './resources/assets/vendor/bootstrap-sass-official/assets/'
+ 'bootstrap': './resources/assets/vendor/bootstrap-sass/assets/'
 };
 /*
  |--------------------------------------------------------------------------
