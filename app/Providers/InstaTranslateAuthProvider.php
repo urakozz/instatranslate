@@ -3,7 +3,7 @@
  * PHP Version 5
  *
  * @category  H24
- * @package   
+ * @package
  * @author    "Yury Kozyrev" <yury.kozyrev@home24.de>
  * @copyright 2015 Home24 GmbH
  * @license   Proprietary license.
@@ -13,19 +13,19 @@
 namespace App\Providers;
 
 
-use App\Auth\CustomAuthGuard;
-use App\Auth\CustomUserProvider;
+use App\Auth\SessionBasedAuthGuard;
+use App\Auth\SessionBasedUserProvider;
 use Illuminate\Support\ServiceProvider;
 
-class CustomAuthProvider extends ServiceProvider {
+class InstaTranslateAuthProvider extends ServiceProvider
+{
 
     public function boot()
     {
-        $this->app['auth']->extend('instagram', function($app)
-        {
-            $model = $app['config']['auth.model'];
-            $userProvider = new CustomUserProvider($app['hash'], new $model);
-            return new CustomAuthGuard($userProvider, $app['session.store']);
+        $this->app['auth']->extend('instagram', function ($app) {
+            $model        = $app['config']['auth.model'];
+            $userProvider = new SessionBasedUserProvider($app['hash'], new $model);
+            return new SessionBasedAuthGuard($userProvider, $app['session.store']);
         });
     }
 

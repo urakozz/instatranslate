@@ -57,7 +57,7 @@ class AuthController extends Controller
                 }
                 throw $e;
             }
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return view('auth_reject', ['desc' => $e->getMessage()]);
         }
 

@@ -3,7 +3,7 @@
  * PHP Version 5
  *
  * @category  H24
- * @package   
+ * @package
  * @author    "Yury Kozyrev" <yury.kozyrev@home24.de>
  * @copyright 2015 Home24 GmbH
  * @license   Proprietary license.
@@ -17,7 +17,8 @@ use Psr\Log\LoggerInterface;
 use Illuminate\Http\Response;
 use Illuminate\Contracts\Debug\ExceptionHandler as ExceptionHandlerContract;
 
-class ExceptionHandler implements ExceptionHandlerContract {
+class ExceptionHandler implements ExceptionHandlerContract
+{
 
     /**
      * The log implementation.
@@ -30,9 +31,9 @@ class ExceptionHandler implements ExceptionHandlerContract {
      * Create a new exception handler instance.
      *
      * @param \Psr\Log\LoggerInterface $log
-     * @return void
      */
-    public function __construct(LoggerInterface $log) {
+    public function __construct(LoggerInterface $log)
+    {
 
         $this->log = $log;
 
@@ -44,7 +45,8 @@ class ExceptionHandler implements ExceptionHandlerContract {
      * @param \Exception $e
      * @return void
      */
-    public function report(Exception $e) {
+    public function report(Exception $e)
+    {
 
         $this->log->error((string) $e);
 
@@ -57,7 +59,8 @@ class ExceptionHandler implements ExceptionHandlerContract {
      * @param \Exception $e
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function render($request, Exception $e) {
+    public function render($request, Exception $e)
+    {
 
         $whoops = new \Whoops\Run;
         $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler());
@@ -73,7 +76,8 @@ class ExceptionHandler implements ExceptionHandlerContract {
      * @param \Exception $e
      * @return void
      */
-    public function renderForConsole($output, Exception $e) {
+    public function renderForConsole($output, Exception $e)
+    {
 
         $output->writeln((string) $e);
 

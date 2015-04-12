@@ -22,7 +22,7 @@ class FeedController extends Controller
     public function index()
     {
         try {
-            $user = \Auth::getUser();
+            $user  = \Auth::getUser();
             $query = ['access_token' => $user->getToken()];
 
             $client   = new Client();

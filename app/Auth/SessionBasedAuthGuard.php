@@ -16,7 +16,7 @@ namespace App\Auth;
 use Illuminate\Auth\Guard;
 use Illuminate\Contracts\Auth\Authenticatable;
 
-class CustomAuthGuard extends Guard
+class SessionBasedAuthGuard extends Guard
 {
 
     /**

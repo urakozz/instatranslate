@@ -3,7 +3,7 @@
  * PHP Version 5
  *
  * @category  H24
- * @package   
+ * @package
  * @author    "Yury Kozyrev" <yury.kozyrev@home24.de>
  * @copyright 2015 Home24 GmbH
  * @license   Proprietary license.
@@ -15,7 +15,8 @@ namespace App\Auth;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Contracts\Auth\UserProvider as UserProviderInterface;
-class CustomUserProvider implements UserProviderInterface
+
+class SessionBasedUserProvider implements UserProviderInterface
 {
     protected $user;
     protected $hasher;
@@ -23,7 +24,7 @@ class CustomUserProvider implements UserProviderInterface
     public function __construct(Hasher $hasher, Authenticatable $user)
     {
         $this->hasher = $hasher;
-        $this->user = $user;
+        $this->user   = $user;
     }
 
     /**
@@ -38,7 +39,7 @@ class CustomUserProvider implements UserProviderInterface
         $data = \Session::get('user');
         $data = @unserialize($data);
 
-        if($data instanceof Authenticatable){
+        if ($data instanceof Authenticatable) {
             return $data;
         }
     }
