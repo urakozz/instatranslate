@@ -29,9 +29,6 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-		if(\Session::get('user')){
-			return redirect("/feed");
-		}
 		$link = sprintf("https://api.instagram.com/oauth/authorize/?client_id=%s&redirect_uri=%s&response_type=code", env("I_CLIENT_ID"), \URL::to('/auth'));
 		return view('index', ['link' => $link]);
 	}

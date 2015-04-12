@@ -71,7 +71,7 @@ class AuthController extends Controller
         $user->setProfilePicture($json['user']["profile_picture"]);
         $user->setId($json['user']['id']);
 
-        \Session::set('user', serialize($user));
+        \Auth::login($user);
         return redirect(\URL::to('/'));
     }
 

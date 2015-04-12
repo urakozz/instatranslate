@@ -11,7 +11,7 @@ class FeedController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
 
     /**
@@ -22,12 +22,7 @@ class FeedController extends Controller
     public function index()
     {
         try {
-            $user = \Session::get('user');
-            $user = @unserialize($user);
-            if (!$user instanceof \App\User) {
-                throw new \DomainException("Unable unserialize");
-            }
-            \Auth::setUser($user);
+            $user = \Auth::getUser();
             $query = ['access_token' => $user->getToken()];
 
             $client   = new Client();

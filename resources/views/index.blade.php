@@ -20,7 +20,7 @@
 	</head>
 
 
-    <body  class="promo">
+    <body class="promo">
 		<div class="promo container">
 			<div class="promo content">
 				<div class="promo title">Welcome to instatranslate</div>
