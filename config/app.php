@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Redis\RedisServiceProvider;
+
 return [
 
     /*
@@ -135,6 +137,7 @@ return [
         \Illuminate\Translation\TranslationServiceProvider::class,
         \Illuminate\Validation\ValidationServiceProvider::class,
         \Illuminate\View\ViewServiceProvider::class,
+        RedisServiceProvider::class,
 
         /*
          * Application Service Providers...
