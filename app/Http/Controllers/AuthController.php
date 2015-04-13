@@ -22,7 +22,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest', ['except' => ['logout']]);
     }
 
     /**
@@ -71,12 +71,13 @@ class AuthController extends Controller
         $user->setProfilePicture($json['user']["profile_picture"]);
         $user->setId($json['user']['id']);
 
-        \Auth::login($user);
+        \Auth::login($user, true);
         return redirect(\URL::to('/'));
     }
 
     public function logout()
     {
+        \Auth::logout();
         \Session::clear();
         return redirect("/");
     }

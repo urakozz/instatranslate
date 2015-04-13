@@ -1,4 +1,3 @@
-
 @import "bootstrap";
 
 body {
@@ -33,4 +32,127 @@ body {
     font-size: 24px;
   }
 }
+
+.block {
+  display: block;
+}
+
+body .it {
+  padding-top: 70px;
+}
+.it {
+  .it-nav {
+    margin-bottom: 0px;
+
+    .it-img-header {
+      height: 32px;
+    }
+    .it-navbar-logo {
+      float: left;
+      padding: 15px 15px;
+      font-size: 18px;
+      line-height: 20px;
+    }
+    .it-link-no-hover:hover, .it-link-no-hover:focus {
+      text-decoration: none;
+    }
+    .it-logout {
+      margin-top: 23px;
+    }
+  }
+  .it-hack-center {
+    position: absolute;
+    left: 50%;
+    margin-left: -50px !important;
+  }
+  .it-content {
+    margin: 0 auto;
+    position: relative;
+    width: 960px;
+    max-width: 1024px;
+    text-align: center;
+
+    .it-post-sidebar {
+      float: left;
+      width: 225px;
+      padding: 17px 0;
+
+      .it-post-sidebar-note {
+        margin-right: 25px;
+        padding-top: 3px;
+        position: relative;
+
+        .it-sidebar-user{
+          padding: 0 50px 0 0;
+          line-height: 10px;
+
+          .it-sidebar-user-name p{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding-left: 4px;
+          }
+        }
+
+        .it-sidebar-avatar {
+          width: 40px;
+          height: 40px;
+          position: absolute;
+          overflow: hidden;
+          right: 0;
+          top: 0;
+
+          .it-sidebar-avatar-image {
+            background-size: 100% 100%;
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+          }
+        }
+      }
+
+    }
+    .it-post-center {
+      background: #d7d7d7;
+      border: 1px solid rgba(0,0,0,.1);
+      border-width: 0 1px;
+      min-width: 240px;
+      max-width: 512px;
+      padding: 16px 32px;
+      margin-left: 224px;
+
+      .it-post-item{
+        background: #fafafa;
+        border: 1px solid silver;
+        border-radius: 3px;
+        box-shadow: 0 1px 16px rgba(0,0,0,.1);
+        text-align: left;
+        position: relative;
+
+        .it-post-photo{
+          overflow: hidden;
+          position: relative;
+
+          &:before {
+            content: '';
+            display: block;
+            padding-bottom: 100%;
+          }
+
+          .it-post-photo-container{
+            background-size: 100% 100%;
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
 

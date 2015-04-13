@@ -65,7 +65,7 @@ class SessionBasedUserProvider implements UserProviderInterface
      */
     public function updateRememberToken(Authenticatable $user, $token)
     {
-        $this->tmpException(__METHOD__);
+        //$this->tmpException(__METHOD__);
     }
 
     /**
