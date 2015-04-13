@@ -4,20 +4,36 @@
 <body class="it it-in-body">
     <nav class="navbar navbar-default navbar-static-top it-nav">
         <div class="container">
-            <div class="it-hack-center">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="navbar-header navbar-left">
+                    <a class="it-navbar-logo" href="/feed">
+                        <img alt="{{ \Auth::getUser()->getFullName() }}" src="{{ \Auth::getUser()->getProfilePicture() }}" class="img-rounded it-img-header">
+                    </a>
+                </div>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a class="navbar-text lead btn-link it-link-no-hover it-navbar-link it-header-username" href="/feed">{{ \Auth::getUser()->getUsername() }}</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class="navbar-text btn-link it-link-no-hover it-logout it-navbar-link" href="/logout">Log Out</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+
+            <div class="it-hack-center it-hack-header">
                 <a class="navbar-text lead it-link-no-hover" href="/feed">Instatranslate</a>
             </div>
-            <div class="navbar-header navbar-left">
-                <a class="it-navbar-logo" href="/feed">
-                    <img alt="{{ \Auth::getUser()->getFullName() }}" src="{{ \Auth::getUser()->getProfilePicture() }}" class="img-rounded it-img-header">
-                </a>
-            </div>
-            <div class="navbar-left">
-                <a class="navbar-text lead btn-link it-link-no-hover" href="/feed">{{ \Auth::getUser()->getUsername() }}</a>
-            </div>
-            <div class="navbar-right">
-                <a class="navbar-text btn-link it-link-no-hover it-logout" href="/logout">Log Out</a>
-            </div>
+
+
+
         </div>
     </nav>
     <div class="container it-content">

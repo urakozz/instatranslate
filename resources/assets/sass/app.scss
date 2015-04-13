@@ -85,6 +85,24 @@ body.it {
     .it-logout {
       margin-top: 23px;
     }
+    .it-header-username{
+      line-height: 30px;
+    }
+    .it-navbar-link{
+      padding-top: 0px;
+      padding-bottom: 0px;
+      padding-left: 15px;
+      margin-bottom: 0px;
+      @media (min-width: $screen-sm-min) {
+        padding-left: 0px;
+      }
+    }
+    .it-hack-header{
+      top: 20px;
+      @media (min-width: $screen-sm-min) {
+        top: 0%;
+      }
+    }
   }
   .it-hack-center {
     position: absolute;

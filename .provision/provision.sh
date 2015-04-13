@@ -13,6 +13,8 @@ php5-xsl php5-mysqlnd php5-mcrypt php5-readline php5-gd
 
 sudo apt-get install -y npm
 ln -sf /usr/bin/nodejs /usr/bin/node
+npm install -g gulp
+npm install -g bower
 
 apt-get install -y redis
 
