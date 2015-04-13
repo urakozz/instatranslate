@@ -37,12 +37,41 @@ body {
   display: block;
 }
 
-body .it {
-  padding-top: 70px;
+body.it {
+  padding-top: 63px;
+  color:rgb(51, 51, 51);
 }
 .it {
+  .it-thumbnail{
+    overflow: hidden;
+    position: relative;
+
+    &:before{
+      content: '';
+      display: block;
+      padding-bottom: 100%;
+    }
+  }
+  .it-thumbnail-i{
+    background-size: 100% 100%;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .it-link-no-hover:hover, .it-link-no-hover:focus {
+    text-decoration: none;
+  }
+
   .it-nav {
     margin-bottom: 0px;
+    width:100%;
+    position:fixed;
+    top:0px;
+    background-color: inherit;
+    background-color: rgba(255,255,255,0.95);
 
     .it-img-header {
       height: 32px;
@@ -52,9 +81,6 @@ body .it {
       padding: 15px 15px;
       font-size: 18px;
       line-height: 20px;
-    }
-    .it-link-no-hover:hover, .it-link-no-hover:focus {
-      text-decoration: none;
     }
     .it-logout {
       margin-top: 23px;
@@ -82,12 +108,12 @@ body .it {
         padding-top: 3px;
         position: relative;
 
-        .it-sidebar-user{
+        .it-sidebar-user {
           padding: 0 50px 0 0;
           line-height: 10px;
 
-          .it-sidebar-user-name p{
-            overflow: hidden;
+          .it-sidebar-user-name p {
+            //overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
             padding-left: 4px;
@@ -116,38 +142,108 @@ body .it {
     }
     .it-post-center {
       background: #d7d7d7;
-      border: 1px solid rgba(0,0,0,.1);
+      border: 1px solid rgba(0, 0, 0, .1);
       border-width: 0 1px;
       min-width: 240px;
       max-width: 512px;
       padding: 16px 32px;
       margin-left: 224px;
 
-      .it-post-item{
+      .it-post-item {
         background: #fafafa;
         border: 1px solid silver;
         border-radius: 3px;
-        box-shadow: 0 1px 16px rgba(0,0,0,.1);
+        //box-shadow: 0 1px 16px rgba(0, 0, 0, .1);
         text-align: left;
         position: relative;
 
-        .it-post-photo{
+      }
+      .it-post-likes {
+        position: relative;
+        height: 40px;
+        border-bottom: 1px solid #ddd;
+        margin: 1px 0 -1px;
+
+        a.liked {
+          color: #FA211E;
+          &:hover{
+            color: #BA1916;
+          }
+        }
+
+        .it-post-likes-link {
+          position: relative;
+          float: left;
+          display: inline;
+          height: 100%;
+          width: 48px;
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+          //border-right: 1px solid #ddd;
+          //box-shadow: 1px 0 0 rgba(255,255,255,.9);
+          //background-image: url("//instagramstatic-a.akamaihd.net/bluebar/5021840/images/feed/feed-assets@2x.png");
+          //background-size: 100px 1000px;
+
+
+          .it-post-likes-link-text {
+            //background: url("//instagramstatic-a.akamaihd.net/bluebar/5021840/images/p/glyph-heart-pop.png") no-repeat 50% 50%;
+            display: block;
+            position: relative;
+            left: 12px;
+            top: 10px;
+            width: 100%;
+            height: 100%;
+            //opacity: 0;
+            z-index: 5;
+            pointer-events: none;
+            background-size: 40px 40px;
+          }
+        }
+        .it-post-likes-list{
+          line-height: 16px;
+          margin: 0 52px 0 48px;
+          padding: 12px 0 12px 0px;
           overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          span {
+            color: #aaa;
+            text-shadow: 0 1px 0 rgba(255,255,255,.8);
+          }
+        }
+      }
+      .it-post-comments {
+        padding: 0;
+        .it-post-comment{
+          border-bottom: 1px solid #e6e6e6;
+          padding: 12px 12px 11px 48px;
+          margin-bottom: 0;
+          word-wrap: break-word;
+          box-shadow: 0 1px 2px rgba(0,0,0,.04);
           position: relative;
 
-          &:before {
-            content: '';
-            display: block;
-            padding-bottom: 100%;
-          }
-
-          .it-post-photo-container{
-            background-size: 100% 100%;
-            bottom: 0;
-            left: 0;
+          .it-post-comment-avatar.it-thumbnail{
             position: absolute;
-            right: 0;
-            top: 0;
+            left: 12px;
+            top: 11px;
+            width: 24px;
+            height: 24px;
+          }
+          .it-post-comment-author a{
+            margin: 0 .4em 0 0;
+            position: relative;
+            top: 1px;
+            text-decoration: none;
+          }
+          .it-post-comment-text span{
+            position: relative;
+            top: 1px;
+            word-wrap: break-word;
+            text-align: left;
           }
         }
       }
