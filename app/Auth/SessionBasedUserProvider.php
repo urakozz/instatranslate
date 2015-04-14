@@ -12,19 +12,20 @@
 
 namespace App\Auth;
 
+use App\Components\Storage\UserStorage;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Hashing\Hasher;
 use Illuminate\Contracts\Auth\UserProvider as UserProviderInterface;
 
 class SessionBasedUserProvider implements UserProviderInterface
 {
-    protected $user;
     protected $hasher;
+    protected $userStorage;
 
-    public function __construct(Hasher $hasher, Authenticatable $user)
+    public function __construct(Hasher $hasher)
     {
         $this->hasher = $hasher;
-        $this->user   = $user;
+        $this->userStorage = new UserStorage(\Redis::connection());
     }
 
     /**
@@ -35,13 +36,7 @@ class SessionBasedUserProvider implements UserProviderInterface
      */
     public function retrieveById($identifier)
     {
-
-        $data = \Session::get('user');
-        $data = @unserialize($data);
-
-        if ($data instanceof Authenticatable) {
-            return $data;
-        }
+        return $this->userStorage->getByPk($identifier);
     }
 
     /**

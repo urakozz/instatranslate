@@ -16,7 +16,7 @@ ln -sf /usr/bin/nodejs /usr/bin/node
 npm install -g gulp
 npm install -g bower
 
-apt-get install -y redis
+apt-get install -y redis-server
 
  
 echo "mysql-server mysql-server/root_password password root" | debconf-set-selections

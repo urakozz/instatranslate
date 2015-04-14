@@ -1,6 +1,6 @@
 @extends('layout.in')
 @section('content')
-    @forelse ($data as $post)
+    @forelse ($data['data'] as $post)
         <div class="block">
             <div class="it-post-sidebar">
                 <div class='it-post-sidebar-note'>
@@ -49,6 +49,19 @@
                             </a>
                             <span class="it-post-comment-text">
                                 {{$post['caption']['text']}}
+                            </span>
+                        </div>
+                        <div class="it-post-comment">
+                            <a href="javascript:void(0)">
+                                <div class="it-post-comment-avatar it-thumbnail">
+                                    <div class="it-thumbnail-i"></div>
+                                </div>
+                            </a>
+                            <a class="it-post-comment-author it-link-no-hover" href="javascript:void(0)">
+                                {{$post['caption']['from']['username']}}
+                            </a>
+                            <span class="it-post-comment-text">
+                                {{$data['translations'][$post['caption']['id']]}}
                             </span>
                         </div>
                     </div>

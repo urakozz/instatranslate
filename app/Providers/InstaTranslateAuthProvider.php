@@ -23,8 +23,7 @@ class InstaTranslateAuthProvider extends ServiceProvider
     public function boot()
     {
         $this->app['auth']->extend('instagram', function ($app) {
-            $model        = $app['config']['auth.model'];
-            $userProvider = new SessionBasedUserProvider($app['hash'], new $model);
+            $userProvider = new SessionBasedUserProvider($app['hash']);
             return new SessionBasedAuthGuard($userProvider, $app['session.store']);
         });
     }

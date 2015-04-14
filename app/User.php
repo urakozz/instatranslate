@@ -134,7 +134,7 @@ class User implements Authenticatable, CanResetPassword
      */
     public function getAuthIdentifier()
     {
-        return $this->getToken();
+        return $this->getId();
     }
 
     /**
