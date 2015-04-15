@@ -13,6 +13,7 @@
 namespace App\Components\Translator;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use GuzzleHttp\Event\CompleteEvent;
 use GuzzleHttp\Pool;
 
@@ -22,49 +23,69 @@ class Translator
     protected $url = 'https://translate.yandex.net/api/v1.5/tr.json/translate';
 
     /**
-     * @var ITranslatable[]
+     * @var ITranslatableContainer
      */
-    protected $items;
+    protected $container;
 
-    protected $res = [];
+    /**
+     * @var ArrayCollection | ITranslatable[]
+     */
+    protected $sourcesMap;
 
-    public function setItems(\Iterator $array)
+    /**
+     * @var ArrayCollection | ITranslatable[]
+     */
+    protected $translatedMap = [];
+
+    public function __construct()
     {
-        $this->items = $array;
+        $this->sourcesMap    = new ArrayCollection();
+        $this->translatedMap = new ArrayCollection();
+    }
+
+    public function setItems(ITranslatableContainer $container)
+    {
+        $this->container = $container;
+        $this->collectHashMap($container);
     }
 
     public function translate()
     {
-        $client = new \GuzzleHttp\Client();
+        $client   = new \GuzzleHttp\Client();
         $requests = [];
-        foreach ($this->items as $item) {
-            $requests[] = $client->createRequest('POST', $this->url, ['body'=>$this->getAttributes("__".$item->getId()."__ ".$item->getText())]);
+        $hash     = new \SplObjectStorage();
+        foreach ($this->sourcesMap as $id => $item) {
+            $request    = $client->createRequest('POST', $this->url, ['body' => $this->getRequestAttributes($item)]);
+            $requests[] = $request;
+            $hash->attach($request, $item);
         }
         $options = [
-            'complete' => function (CompleteEvent $event) {
-                //$event->getRequest()->getBody();
+            'complete' => function (CompleteEvent $event) use ($hash) {
+                /** @var ITranslatable $translatable */
+                $translatable = $hash[$event->getRequest()];
                 $content = $event->getResponse()->getBody()->getContents();
                 $content = json_decode($content);
-                $this->res[] = reset($content->text);
-        }];
-        $pool = new Pool($client, $requests, $options);
+                $translatable->setTranslation(reset($content->text));
+            }];
+        $pool    = new Pool($client, $requests, $options);
         $pool->wait();
-
-        $proc = [];
-        foreach($this->res as $res){
-            $id = preg_replace("/^\_\_(\d+).*/iu", "$1", $res);
-            $proc[$id] = str_replace("__{$id}__", "", $res);
-        }
-        return $proc;
     }
 
-    protected function getAttributes($text)
+    protected function collectHashMap(ITranslatableContainer $container)
+    {
+        foreach ($container->getTranslatable() as $translatable) {
+            if (null === $translatable) continue;
+            $this->sourcesMap[$translatable->getId()] = $translatable;
+        }
+    }
+
+    protected function getRequestAttributes(ITranslatable $item)
     {
         return [
             'key' => env('Y_API_KEY'),
-            'lang' =>'ru',
-            'options'=>'1',
-            'text' =>$text
+            'lang' => 'ru',
+            'options' => '1',
+            'text' => $item->getText()
         ];
     }
 }

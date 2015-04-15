@@ -1,20 +1,20 @@
 @extends('layout.in')
 @section('content')
-    @forelse ($data['data'] as $post)
+    @forelse ($data->getData() as $post)
         <div class="block">
             <div class="it-post-sidebar">
                 <div class='it-post-sidebar-note'>
                     <div class="it-sidebar-user text-right">
                         <div class="it-sidebar-user-name">
-                            <p>{{$post['user']['username']}}</p>
+                            <p>{{$post->getUser()->getUsername()}}</p>
                         </div>
                         <div class="it-sidebar-user-date">
-                            <p>{{date("Y-m-d H:i:s", $post['created_time'])}}</p>
+                            <p>{{date("Y-m-d H:i:s", $post->getCreatedTime())}}</p>
                         </div>
                     </div>
                     <div class="it-sidebar-avatar">
                         <div class="it-sidebar-avatar-image"
-                             style="background-image:url({{ $post['user']['profile_picture'] }});"></div>
+                             style="background-image:url({{ $post->getUser()->getProfilePicture()}});"></div>
                     </div>
                 </div>
             </div>
@@ -22,17 +22,17 @@
                 <div class="it-post-item">
                     <div class="it-post-photo it-thumbnail">
                         <div class="it-post-photo-container it-thumbnail-i"
-                             style="background-image:url({{ $post['images']['standard_resolution']['url'] }});"></div>
+                             style="background-image:url({{ $post->getImages()->getStandardResolution()->getUrl()}});"></div>
                     </div>
                     <div class="it-post-likes">
-                        <a class="it-post-likes-link it-link-no-hover {{ $post['user_has_liked'] ?'liked':'' }}" href="javascript:void(0)">
+                        <a class="it-post-likes-link it-link-no-hover {{ $post->isUserHasLiked() ?'liked':'' }}" href="javascript:void(0)">
                             <div class="it-post-likes-link-text">
-                                {{ $post['user_has_liked'] ?'Liked':'Like' }}
+                                {{ $post->isUserHasLiked() ?'Liked':'Like' }}
                             </div>
                         </a>
                         <div class="it-post-likes-list">
                             <span>
-                                {{ number_format($post['likes']['count'], 0, ',', ' ') }} likes
+                                {{ number_format($post->getLikes()->getCount(), 0, ',', ' ') }} likes
                             </span>
                         </div>
                     </div>
@@ -41,14 +41,14 @@
                             <a href="javascript:void(0)">
                                 <div class="it-post-comment-avatar it-thumbnail">
                                     <div class="it-thumbnail-i"
-                                         style="background-image:url({{ $post['caption']['from']['profile_picture'] }});"></div>
+                                         style="background-image:url({{ $post->getCaption()->getFrom()->getProfilePicture() }});"></div>
                                 </div>
                             </a>
                             <a class="it-post-comment-author it-link-no-hover" href="javascript:void(0)">
-                                {{$post['caption']['from']['username']}}
+                                {{$post->getCaption()->getFrom()->getUsername()}}
                             </a>
                             <span class="it-post-comment-text">
-                                {{$post['caption']['text']}}
+                                {{$post->getCaption()->getText()}}
                             </span>
                         </div>
                         <div class="it-post-comment">
@@ -58,10 +58,10 @@
                                 </div>
                             </a>
                             <a class="it-post-comment-author it-link-no-hover" href="javascript:void(0)">
-                                {{$post['caption']['from']['username']}}
+                                {{$post->getCaption()->getFrom()->getUsername()}}
                             </a>
                             <span class="it-post-comment-text">
-                                {{$data['translations'][$post['caption']['id']]}}
+                                {{$post->getCaption()->getTranslation()}}
                             </span>
                         </div>
                     </div>

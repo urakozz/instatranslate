@@ -3,7 +3,7 @@
  * PHP Version 5
  *
  * @category  H24
- * @package
+ * @package   
  * @author    "Yury Kozyrev" <yury.kozyrev@home24.de>
  * @copyright 2015 Home24 GmbH
  * @license   Proprietary license.
@@ -13,23 +13,13 @@
 namespace App\Components\Translator;
 
 
-interface ITranslatable
+interface ITranslatableContainer
 {
 
     /**
      * Desc
      *
-     * @return string
+     * @return ITranslatable[]
      */
-    public function getId();
-
-    /**
-     * Desc
-     *
-     * @return string
-     */
-    public function getText();
-
-    public function setTranslation($string);
-    public function getTranslation();
+    public function getTranslatable();
 }

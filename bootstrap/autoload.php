@@ -14,7 +14,14 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
-require __DIR__.'/../vendor/autoload.php';
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Composer\Autoload\ClassLoader;
+/**
+ * @var ClassLoader $loader
+ */
+$loader = require __DIR__.'/../vendor/autoload.php';
+AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,5 +36,7 @@ require __DIR__.'/../vendor/autoload.php';
 
 if (file_exists($compiledPath = __DIR__.'/../vendor/compiled.php'))
 {
-	require $compiledPath;
+	//require $compiledPath;
 }
+
+return $loader;

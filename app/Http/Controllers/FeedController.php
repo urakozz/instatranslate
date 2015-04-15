@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Components\Translator\Translator;
 use App\Components\User\UserStorage;
 use App\Response\Partials\Caption;
+use App\Response\Partials\UserInfo;
+use App\Response\Users\MediaFeed;
 use GuzzleHttp\Client;
 
 class FeedController extends Controller
@@ -55,25 +57,16 @@ class FeedController extends Controller
         }
 
         $data = $this->call($query);
-        \Session::set('next_max_id', $data['pagination']['next_max_id']);
-        $captions = new \SplDoublyLinkedList();
-        foreach ($data['data'] as $post) {
-            if (null === $post['caption']) continue;
 
-            $captions[] = new Caption($post['caption']);
-        }
+        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+
+        /** @var MediaFeed $data */
+        $data = $serializer->deserialize(json_encode($data), MediaFeed::class, 'json');
+
         $translator = new Translator();
-        $translator->setItems($captions);
-        $translate = $translator->translate();
+        $translator->setItems($data);
+        $translator->translate();
 
-        $translations = [];
-        foreach ($data['data'] as $post) {
-            $translations[$post['caption']['id']] =
-                isset($translate[$post['caption']['id']])
-                    ? $translate[$post['caption']['id']]
-                    : null;
-        }
-        $data['translations'] = $translations;
         return $data;
     }
 
