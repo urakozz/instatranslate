@@ -37,6 +37,7 @@
                         </div>
                     </div>
                     <div class="it-post-comments">
+                        @if($post->getCaption())
                         <div class="it-post-comment">
                             <a href="javascript:void(0)">
                                 <div class="it-post-comment-avatar it-thumbnail">
@@ -64,6 +65,7 @@
                                 {{$post->getCaption()->getTranslation()}}
                             </span>
                         </div>
+                        @endif
                     </div>
                 </div>
 

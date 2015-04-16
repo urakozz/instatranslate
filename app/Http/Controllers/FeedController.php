@@ -2,11 +2,11 @@
 namespace App\Http\Controllers;
 
 use App\Components\Translator\Translator;
-use App\Components\User\UserStorage;
-use App\Response\Partials\Caption;
-use App\Response\Partials\UserInfo;
 use App\Response\Users\MediaFeed;
-use GuzzleHttp\Client;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\CachedReader;
+use Kozz\Laravel\Facades\Guzzle;
+use Kozz\Laravel\LaravelDoctrineCache;
 
 class FeedController extends Controller
 {
@@ -56,24 +56,35 @@ class FeedController extends Controller
             $query['next_max_id'] = $next;
         }
 
+        \Log::info('Instagram call start');
+        $t = microtime(true);
         $data = $this->call($query);
+        \Log::info(sprintf("Instagram call end, time is %.04F", microtime(true) - $t));
 
-        $serializer = \JMS\Serializer\SerializerBuilder::create()->build();
+
+        \Log::info('Serializer call start');
+        $t = microtime(true);
+        $serializer = \JMS\Serializer\SerializerBuilder::create()
+            //->setAnnotationReader(new CachedReader(new AnnotationReader(), new LaravelDoctrineCache()))
+            ->build();
 
         /** @var MediaFeed $data */
         $data = $serializer->deserialize(json_encode($data), MediaFeed::class, 'json');
+        \Log::info(sprintf("Serializer call end, time is %.04F", microtime(true) - $t));
 
+        \Log::info('Translator call start');
+        $t = microtime(true);
         $translator = new Translator();
         $translator->setItems($data);
         $translator->translate();
+        \Log::info(sprintf("Translator call end, time is %.04F", microtime(true) - $t));
 
         return $data;
     }
 
     protected function call($query)
     {
-        $client   = new Client();
-        $response = $client->get('https://api.instagram.com/v1/users/self/feed', ['query' => $query]);
+        $response = Guzzle::get('https://api.instagram.com/v1/users/self/feed', ['query' => $query]);
         $data     = $response->json();
         $code     = @$data['meta']['code'];
         if ($code !== 200) {

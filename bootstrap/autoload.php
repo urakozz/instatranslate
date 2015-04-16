@@ -36,7 +36,7 @@ AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
 if (file_exists($compiledPath = __DIR__.'/../vendor/compiled.php'))
 {
-	//require $compiledPath;
+	require $compiledPath;
 }
 
 return $loader;

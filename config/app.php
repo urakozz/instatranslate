@@ -110,7 +110,7 @@ return [
     |
     */
 
-    'providers' => [
+    'providers' => array_filter([
 
         /*
          * Laravel Framework Service Providers...
@@ -139,6 +139,7 @@ return [
         \Illuminate\View\ViewServiceProvider::class,
         RedisServiceProvider::class,
 
+
         /*
          * Application Service Providers...
          */
@@ -148,10 +149,11 @@ return [
         \App\Providers\EventServiceProvider::class,
         \App\Providers\RouteServiceProvider::class,
         \App\Providers\InstaTranslateAuthProvider::class,
+        \Kozz\Laravel\Providers\Guzzle::class,
 
-        \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class
+        env('APP_DEBUG', false) ? \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class : null
 
-    ],
+    ]),
 
     /*
     |--------------------------------------------------------------------------
