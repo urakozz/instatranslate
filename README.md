@@ -2,6 +2,7 @@
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/urakozz/instatranslate/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/urakozz/instatranslate/?branch=master)
 [![Build Status](https://travis-ci.org/urakozz/instatranslate.svg?branch=master)](https://travis-ci.org/urakozz/instatranslate)
+[![Circle CI](https://circleci.com/gh/urakozz/instatranslate.svg?style=svg)](https://circleci.com/gh/urakozz/instatranslate)
 [![Code Climate](https://codeclimate.com/github/urakozz/instatranslate/badges/gpa.svg)](https://codeclimate.com/github/urakozz/instatranslate)
 [![Test Coverage](https://codeclimate.com/github/urakozz/instatranslate/badges/coverage.svg)](https://codeclimate.com/github/urakozz/instatranslate)
 
