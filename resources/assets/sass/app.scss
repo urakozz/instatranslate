@@ -5,10 +5,14 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
-  color: #B0BEC5;
+  color: #656e75;
   display: table;
-  font-weight: 100;
+  font-weight: 300;
   font-family: 'Lato';
+  @media (min-width: $screen-sm-min) {
+    color: #a0aeb5;
+    font-weight: 100;
+  }
 }
 
 .promo {
