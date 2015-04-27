@@ -124,7 +124,7 @@ class Translator
 
     protected function getKey(ITranslatable $item)
     {
-        $key = "tr_" ;//. crc32(get_class($this->translator) . ":" . get_class($item));
+        $key = "tr_";//. crc32(get_class($this->translator) . ":" . get_class($item));
         $key .= "_" . $item->getId();
         return $key;
     }

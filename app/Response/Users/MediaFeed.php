@@ -27,20 +27,4 @@ class MediaFeed extends InstagramResponse
      */
     protected $data;
 
-    /**
-     * Desc
-     *
-     * @return \Generator | ITranslatable[]
-     */
-    public function getTranslatable()
-    {
-        foreach ($this->data as $media) {
-            yield $media->getCaption();
-            foreach ($media->getComments()->getData() as $comment) {
-                yield $comment;
-            }
-
-        }
-
-    }
 }

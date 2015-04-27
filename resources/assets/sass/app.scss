@@ -43,21 +43,22 @@ body {
 
 body.it {
   padding-top: 63px;
-  color:rgb(51, 51, 51);
+  color: rgb(51, 51, 51);
   min-width: 750px;
 }
+
 .it {
-  .it-thumbnail{
+  .it-thumbnail {
     overflow: hidden;
     position: relative;
 
-    &:before{
+    &:before {
       content: '';
       display: block;
       padding-bottom: 100%;
     }
   }
-  .it-thumbnail-i{
+  .it-thumbnail-i {
     background-size: 100% 100%;
     bottom: 0;
     left: 0;
@@ -72,11 +73,11 @@ body.it {
 
   .it-nav {
     margin-bottom: 0px;
-    width:100%;
-    position:fixed;
-    top:0px;
+    width: 100%;
+    position: fixed;
+    top: 0px;
     background-color: inherit;
-    background-color: rgba(255,255,255,0.95);
+    background-color: rgba(255, 255, 255, 0.95);
 
     .it-img-header {
       height: 32px;
@@ -90,10 +91,10 @@ body.it {
     .it-logout {
       margin-top: 23px;
     }
-    .it-header-username{
+    .it-header-username {
       line-height: 30px;
     }
-    .it-navbar-link{
+    .it-navbar-link {
       padding-top: 0px;
       padding-bottom: 0px;
       padding-left: 15px;
@@ -102,7 +103,7 @@ body.it {
         padding-left: 0px;
       }
     }
-    .it-hack-header{
+    .it-hack-header {
       top: 20px;
       @media (min-width: $screen-sm-min) {
         top: 0%;
@@ -189,7 +190,7 @@ body.it {
 
         a.liked {
           color: #FA211E;
-          &:hover{
+          &:hover {
             color: #BA1916;
           }
         }
@@ -210,7 +211,6 @@ body.it {
           //background-image: url("//instagramstatic-a.akamaihd.net/bluebar/5021840/images/feed/feed-assets@2x.png");
           //background-size: 100px 1000px;
 
-
           .it-post-likes-link-text {
             //background: url("//instagramstatic-a.akamaihd.net/bluebar/5021840/images/p/glyph-heart-pop.png") no-repeat 50% 50%;
             display: block;
@@ -225,7 +225,7 @@ body.it {
             background-size: 40px 40px;
           }
         }
-        .it-post-likes-list{
+        .it-post-likes-list {
           line-height: 16px;
           margin: 0 52px 0 48px;
           padding: 12px 0 12px 0px;
@@ -235,38 +235,84 @@ body.it {
 
           span {
             color: #aaa;
-            text-shadow: 0 1px 0 rgba(255,255,255,.8);
+            text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
           }
         }
       }
       .it-post-comments {
         padding: 0;
-        .it-post-comment{
-          border-bottom: 1px solid #e6e6e6;
+        .it-post-comment {
           padding: 12px 12px 11px 48px;
           margin-bottom: 0;
           word-wrap: break-word;
-          box-shadow: 0 1px 2px rgba(0,0,0,.04);
           position: relative;
 
-          .it-post-comment-avatar.it-thumbnail{
+          &__light-border {
+            border-bottom: 1px solid #eaeaea;
+          }
+
+          &__strong-border {
+            box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+            border-bottom: 1px solid #c1c1c1;
+          }
+
+          &__no-border {
+            border-bottom: none;
+          }
+          &__no-shadow {
+            box-shadow: none;
+          }
+
+          .it-post-comment-avatar.it-thumbnail {
             position: absolute;
             left: 12px;
             top: 11px;
             width: 24px;
             height: 24px;
           }
-          .it-post-comment-author a{
-            margin: 0 .4em 0 0;
-            position: relative;
-            top: 1px;
-            text-decoration: none;
+          .it-post-comment-author {
+            a {
+              margin: 0 .4em 0 0;
+              position: relative;
+              top: 1px;
+              text-decoration: none;
+            }
+            &__invisible {
+              opacity: 0;
+            }
+
           }
-          .it-post-comment-text span{
+          .it-post-comment-text span {
             position: relative;
             top: 1px;
             word-wrap: break-word;
             text-align: left;
+          }
+        }
+
+        .it-comment-creator {
+          padding: 12px;
+          margin-bottom: 0;
+          &_text {
+            top: 0;
+            position: relative;
+          }
+          .it-comment-form {
+            margin-bottom: 0;
+
+            &_input {
+              width: 100%;
+              margin: 0;
+              padding: 8px 9px 7px;
+
+              border: 1px solid #d8d8d8;
+              border-radius: 2px;
+              -webkit-font-smoothing: antialiased;
+              &__faded{
+                background-color: rgba(255,255,255,.2);
+              }
+            }
+
           }
         }
       }

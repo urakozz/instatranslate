@@ -48,9 +48,9 @@ class InstagramAdapter extends AbstractTranslatableAdapter
     {
         foreach ($this->source->getData() as $media) {
             yield $media->getCaption();
-//            foreach ($media->getComments()->getData() as $comment) {
-//                yield $comment;
-//            }
+            foreach ($media->getComments()->getData() as $comment) {
+                yield $comment;
+            }
         }
     }
 

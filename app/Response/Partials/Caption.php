@@ -132,4 +132,9 @@ class Caption
     {
         return $this->translation;
     }
+
+    public function isTranslated()
+    {
+        return $this->translation && $this->translation !== $this->text;
+    }
 }
