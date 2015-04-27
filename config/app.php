@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Redis\RedisServiceProvider;
 
 return [
 
@@ -122,7 +121,7 @@ return [
         \Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
         \Illuminate\Routing\ControllerServiceProvider::class,
         \Illuminate\Cookie\CookieServiceProvider::class,
-        \Illuminate\Database\DatabaseServiceProvider::class,
+//        \Illuminate\Database\DatabaseServiceProvider::class,
         \Illuminate\Encryption\EncryptionServiceProvider::class,
         \Illuminate\Filesystem\FilesystemServiceProvider::class,
         \Illuminate\Foundation\Providers\FoundationServiceProvider::class,
@@ -150,7 +149,7 @@ return [
         \App\Providers\InstaTranslateAuthProvider::class,
         \Kozz\Laravel\Providers\Guzzle::class,
 
-        env('APP_DEBUG', false) ? \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class : null
+        'local' === env('APP_ENV') ? \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class : null
 
     ]),
 

@@ -4,7 +4,7 @@ sudo apt-get update
 export LC_ALL="en_US.UTF-8"
 dpkg-reconfigure locales
 sudo apt-get install -y python-software-properties git
-sudo apt-add-repository ppa:ondrej/php5
+sudo apt-add-repository ppa:ondrej/php5-5.6
 sudo apt-add-repository ppa:chris-lea/redis-server
 sudo apt-get update
 sudo apt-get install -y php5-dev php5-memcached php5-common \
