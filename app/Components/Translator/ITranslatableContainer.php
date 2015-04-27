@@ -13,7 +13,7 @@
 namespace App\Components\Translator;
 
 
-interface ITranslatableContainer
+interface ITranslatableContainer extends \IteratorAggregate
 {
 
     /**

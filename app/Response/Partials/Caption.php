@@ -16,7 +16,7 @@ namespace App\Response\Partials;
 use App\Components\Translator\ITranslatable;
 use JMS\Serializer\Annotation\Type;
 
-class Caption implements ITranslatable
+class Caption
 {
 
     /**

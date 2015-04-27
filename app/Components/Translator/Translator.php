@@ -13,79 +13,140 @@
 namespace App\Components\Translator;
 
 
+use App\Components\Translator\TranslatorAdapter\ITranslatorAdapter;
+use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Collections\ArrayCollection;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Event\CompleteEvent;
 use GuzzleHttp\Pool;
 
 class Translator
 {
 
-    protected $url = 'https://translate.yandex.net/api/v1.5/tr.json/translate';
+    /**
+     * @var ITranslatorAdapter
+     */
+    protected $translator;
 
     /**
-     * @var ITranslatableContainer
+     * @var ClientInterface
      */
-    protected $container;
+    protected $client;
 
     /**
-     * @var ArrayCollection | ITranslatable[]
+     * @var Cache
      */
-    protected $sourcesMap;
+    protected $cache;
 
     /**
-     * @var ArrayCollection | ITranslatable[]
+     * @var \SplObjectStorage
      */
-    protected $translatedMap = [];
+    protected $requestsHash;
 
-    public function __construct()
+    /**
+     * @param ClientInterface $guzzle
+     * @param ITranslatorAdapter $translator
+     */
+    public function __construct(ClientInterface $guzzle, ITranslatorAdapter $translator)
     {
+        $this->client        = $guzzle;
+        $this->translator    = $translator;
         $this->sourcesMap    = new ArrayCollection();
         $this->translatedMap = new ArrayCollection();
+        $this->requestsHash  = new \SplObjectStorage();
     }
 
-    public function setItems(ITranslatableContainer $container)
+    /**
+     * Desc
+     *
+     * @param Cache $cache
+     * @return void
+     */
+    public function setCache(Cache $cache)
     {
-        $this->container = $container;
-        $this->collectHashMap($container);
+        $this->cache = $cache;
     }
 
-    public function translate()
+    /**
+     * Desc
+     *
+     * @param ITranslatableContainer $container
+     * @return void
+     */
+    public function translate(ITranslatableContainer $container)
     {
-        $client   = new \GuzzleHttp\Client();
-        $requests = [];
-        $hash     = new \SplObjectStorage();
-        foreach ($this->sourcesMap as $id => $item) {
-            $request    = $client->createRequest('POST', $this->url, ['body' => $this->getRequestAttributes($item)]);
-            $requests[] = $request;
-            $hash->attach($request, $item);
-        }
+        $requests = $this->generateRequests($container);
+
         $options = [
-            'complete' => function (CompleteEvent $event) use ($hash) {
+            'complete' => function (CompleteEvent $event) {
                 /** @var ITranslatable $translatable */
-                $translatable = $hash[$event->getRequest()];
-                $content = $event->getResponse()->getBody()->getContents();
-                $content = json_decode($content);
-                $translatable->setTranslation(reset($content->text));
+                $translatable = $this->requestsHash[$event->getRequest()];
+                $translation  = $this->translator->getTranslation($event->getResponse());
+                if ($this->cache) {
+                    $this->cache->save($this->getKey($translatable), $translation);
+                }
+                //$redis = \Redis::getFacadeRoot();
+                //var_dump($redis->keys("laravel:tr*"));
+                //die;
+                $translatable->setTranslation($translation);
             }];
-        $pool    = new Pool($client, $requests, $options);
+        $pool    = new Pool($this->client, $requests, $options);
         $pool->wait();
     }
 
-    protected function collectHashMap(ITranslatableContainer $container)
+    /**
+     * Desc
+     *
+     * @param ITranslatableContainer $container
+     * @return \GuzzleHttp\Message\RequestInterface[]
+     */
+    protected function generateRequests(ITranslatableContainer $container)
     {
-        foreach ($container->getTranslatable() as $translatable) {
-            if (null === $translatable) continue;
-            $this->sourcesMap[$translatable->getId()] = $translatable;
+        $requests = [];
+        $i = $j = 0;
+        foreach ($container as $item) {
+            if ($cachedTranslation = $this->getCachedTranslation($item)) {
+                $item->setTranslation($cachedTranslation);
+                $i++;
+            } else {
+                $request    = $this->createRequest($item);
+                $requests[] = $request;
+                $this->requestsHash->attach($request, $item);
+                $j++;
+            }
         }
+        var_dump($i, $j);//die;
+
+        return $requests;
     }
 
-    protected function getRequestAttributes(ITranslatable $item)
+    protected function getCachedTranslation(ITranslatable $item)
     {
-        return [
-            'key' => env('Y_API_KEY'),
-            'lang' => 'ru',
-            'options' => '1',
-            'text' => $item->getText()
-        ];
+        return $this->cache ? $this->cache->fetch($this->getKey($item)) : null;
     }
+
+    protected function getKey(ITranslatable $item)
+    {
+        $key = "tr_" ;//. crc32(get_class($this->translator) . ":" . get_class($item));
+        $key .= "_" . $item->getId();
+        return $key;
+    }
+
+
+    /**
+     * Desc
+     *
+     * @param ITranslatable $item
+     * @return \GuzzleHttp\Message\RequestInterface
+     */
+    protected function createRequest(ITranslatable $item)
+    {
+        return $this->client->createRequest(
+            'POST',
+            $this->translator->getUrl(),
+            ['body' => $this->translator->getRequestAttributes($item)]
+        );
+    }
+
+
 }

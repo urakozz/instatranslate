@@ -19,7 +19,7 @@ use App\Response\InstagramResponse;
 use App\Response\Partials\Media;
 use JMS\Serializer\Annotation\Type;
 
-class MediaFeed extends InstagramResponse implements ITranslatableContainer
+class MediaFeed extends InstagramResponse
 {
     /**
      * @var Media[]
