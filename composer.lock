@@ -1061,12 +1061,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/urakozz/php-laravel-docrtine-cache.git",
-                "reference": "df0e3fe76c9769824858976f3615531712aa1a0b"
+                "reference": "93d12ce39c5c2d57ef2fd86575ca2252d52cb280"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/urakozz/php-laravel-docrtine-cache/zipball/df0e3fe76c9769824858976f3615531712aa1a0b",
-                "reference": "df0e3fe76c9769824858976f3615531712aa1a0b",
+                "url": "https://api.github.com/repos/urakozz/php-laravel-docrtine-cache/zipball/93d12ce39c5c2d57ef2fd86575ca2252d52cb280",
+                "reference": "93d12ce39c5c2d57ef2fd86575ca2252d52cb280",
                 "shasum": ""
             },
             "require": {
@@ -1110,7 +1110,7 @@
                 "doctrine",
                 "laravel"
             ],
-            "time": "2015-04-27 13:12:41"
+            "time": "2015-04-27 18:21:48"
         },
         {
             "name": "kozz/laravel-guzzle-provider",

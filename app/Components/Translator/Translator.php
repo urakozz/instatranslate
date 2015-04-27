@@ -83,11 +83,8 @@ class Translator
                 $translatable = $this->requestsHash[$event->getRequest()];
                 $translation  = $this->translator->getTranslation($event->getResponse());
                 if ($this->cache) {
-                    $this->cache->save($this->getKey($translatable), $translation);
+                    $this->cache->save($this->getKey($translatable), $translation, 24*60);
                 }
-                //$redis = \Redis::getFacadeRoot();
-                //var_dump($redis->keys("laravel:tr*"));
-                //die;
                 $translatable->setTranslation($translation);
             }];
         $pool    = new Pool($this->client, $requests, $options);

@@ -63,9 +63,9 @@ class FeedController extends Controller
             $query['next_max_id'] = $next;
         }
 
-        if ($data = \Cache::get($user->getToken())) {
-            $data = unserialize($data);
-        } else {
+        $data = \Cache::get($user->getToken());
+
+        if (!$data) {
             \Log::info('Instagram call start');
             $t    = microtime(true);
             $data = $this->call($query);
@@ -82,7 +82,7 @@ class FeedController extends Controller
             $data = $serializer->deserialize(json_encode($data), MediaFeed::class, 'json');
             \Log::info(sprintf("Serializer call end, time is %.04F", microtime(true) - $t));
 
-            \Cache::put($user->getToken(), serialize($data), 1);
+            \Cache::put($user->getToken(), $data, 1);
         }
 
 
