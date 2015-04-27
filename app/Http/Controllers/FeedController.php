@@ -89,8 +89,8 @@ class FeedController extends Controller
 
         \Log::info('Translator call start');
         $t          = microtime(true);
-        $translator = new Translator(Guzzle::getFacadeRoot(), new BingTranslator());
-//        $translator->setCache(new LaravelDoctrineCache());
+        $translator = new Translator(Guzzle::getFacadeRoot(), new YandexTranslator());
+        $translator->setCache(new LaravelDoctrineCache());
         $translator->translate(new InstagramAdapter($data));
         \Log::info(sprintf("Translator call end, time is %.04F", microtime(true) - $t));
 
