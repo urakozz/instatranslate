@@ -89,8 +89,7 @@
                                             <div class="it-post-comment it-post-comment__light-border">
                                                 <a href="javascript:void(0)">
                                                     <div class="it-post-comment-avatar it-thumbnail">
-                                                        <div class="it-thumbnail-i"
-                                                             style="background-image:url({{ $comment->getFrom()->getProfilePicture() }});"></div>
+                                                        <div class="it-thumbnail-i"></div>
                                                     </div>
                                                 </a>
                                                 <span class="it-post-comment-text">
