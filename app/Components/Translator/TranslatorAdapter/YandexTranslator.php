@@ -14,6 +14,7 @@ namespace App\Components\Translator\TranslatorAdapter;
 
 
 use App\Components\Translator\ITranslatable;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\ResponseInterface;
 
 class YandexTranslator implements ITranslatorAdapter
@@ -25,6 +26,7 @@ class YandexTranslator implements ITranslatorAdapter
     {
         return $this->url;
     }
+
 
     public function getTranslation(ResponseInterface $response)
     {
@@ -41,5 +43,10 @@ class YandexTranslator implements ITranslatorAdapter
             'options' => '1',
             'text' => $item->getText()
         ];
+    }
+
+    public function createRequest(ClientInterface $client, ITranslatable $item)
+    {
+        return $client->createRequest("POST", $this->getUrl(), ['query'=>$this->getRequestAttributes($item)]);
     }
 }

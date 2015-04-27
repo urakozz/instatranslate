@@ -14,6 +14,7 @@ namespace App\Components\Translator\TranslatorAdapter;
 
 
 use App\Components\Translator\ITranslatable;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\ResponseInterface;
 
 class BingTranslator implements ITranslatorAdapter
@@ -28,20 +29,27 @@ class BingTranslator implements ITranslatorAdapter
     {
 
         $content = $response->getBody()->getContents();
+        $content = json_decode($content);
+        return reset($content->d->results)->Text;
 
     }
 
     public function getRequestAttributes(ITranslatable $item)
     {
         return [
-            'Text'=>$item->getText(),
-            "To"=>'ru',
-            "appId"=>env('M_API_KEY')
+            'Text'=>"'".$item->getText()."'",
+            "To"=>"'ru'",
+            '$format'=>'json'
         ];
     }
 
     public function getBasicAuth()
     {
-        return [env('M_API_CLIENT'), env('M_API_KEY')];
+        return [env('M_API_KEY'), env('M_API_KEY'), 'basic'];
+    }
+
+    public function createRequest(ClientInterface $client, ITranslatable $item)
+    {
+        return $client->createRequest("GET", $this->getUrl(), ['query'=>$this->getRequestAttributes($item), 'auth'=>$this->getBasicAuth()]);
     }
 }

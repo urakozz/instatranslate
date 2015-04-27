@@ -83,7 +83,7 @@ class Translator
                 $translatable = $this->requestsHash[$event->getRequest()];
                 $translation  = $this->translator->getTranslation($event->getResponse());
                 if ($this->cache) {
-                    $this->cache->save($this->getKey($translatable), $translation, 24*60);
+                    $this->cache->save($this->getKey($translatable), $translation, 24 * 60);
                 }
                 $translatable->setTranslation($translation);
             }];
@@ -100,7 +100,7 @@ class Translator
     protected function generateRequests(ITranslatableContainer $container)
     {
         $requests = [];
-        $i = $j = 0;
+        $i        = $j = 0;
         foreach ($container as $item) {
             if ($cachedTranslation = $this->getCachedTranslation($item)) {
                 $item->setTranslation($cachedTranslation);
@@ -138,11 +138,7 @@ class Translator
      */
     protected function createRequest(ITranslatable $item)
     {
-        return $this->client->createRequest(
-            'POST',
-            $this->translator->getUrl(),
-            ['body' => $this->translator->getRequestAttributes($item)]
-        );
+        return $this->translator->createRequest($this->client, $item);
     }
 
 
