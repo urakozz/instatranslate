@@ -22,6 +22,7 @@ class BingTranslator implements ITranslatorAdapter
 
     public function getUrl()
     {
+        # https://datamarket.azure.com/account/datasets
         return 'https://api.datamarket.azure.com/Bing/MicrosoftTranslator/v1/Translate';
     }
 
