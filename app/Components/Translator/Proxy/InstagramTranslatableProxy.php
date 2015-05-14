@@ -14,7 +14,7 @@ namespace App\Components\Translator\Proxy;
 
 
 use App\Components\Translator\ITranslatable;
-use App\Response\Partials\Caption;
+use Instagram\Response\Partials\Caption;
 
 class InstagramTranslatableProxy implements ITranslatable
 {

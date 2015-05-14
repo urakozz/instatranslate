@@ -15,7 +15,8 @@ namespace App\Components\Translator\Adapters;
 
 use App\Components\Translator\ITranslatable;
 use App\Components\Translator\Proxy\InstagramTranslatableProxy;
-use App\Response\InstagramResponse;
+use Instagram\Response\InstagramResponse;
+
 
 class InstagramAdapter extends AbstractTranslatableAdapter
 {

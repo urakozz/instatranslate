@@ -5,15 +5,11 @@ use App\Components\Translator\Adapters\InstagramAdapter;
 use App\Components\Translator\Translator;
 use App\Components\Translator\TranslatorAdapter\BingTranslator;
 use App\Components\Translator\TranslatorAdapter\YandexTranslator;
-use App\Response\Users\MediaFeed;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\CachedReader;
+use Instagram\Response\Users\MediaFeed;
 use Kozz\Laravel\Facades\Guzzle;
 use Kozz\Laravel\LaravelDoctrineCache;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 class FeedController extends Controller
 {
