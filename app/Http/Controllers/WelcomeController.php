@@ -1,6 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
+use Instagram\Client\Config\AuthConfig;
+use Instagram\Client\InstagramAuth;
+
 class WelcomeController extends Controller
 {
 
@@ -30,8 +33,8 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        $link = sprintf("https://api.instagram.com/oauth/authorize/?client_id=%s&redirect_uri=%s&response_type=code", env("I_CLIENT_ID"), \URL::to('/auth'));
-        return view('index', ['link' => $link]);
+        $client = new InstagramAuth(new AuthConfig(env("I_CLIENT_ID"), env("I_CLIENT_SECRET"), \URL::to('/auth')));
+        return view('index', ['link' => $client->getOAuthUrl()]);
     }
 
 }

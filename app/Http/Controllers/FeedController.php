@@ -7,7 +7,11 @@ use App\Components\Translator\TranslatorAdapter\BingTranslator;
 use App\Components\Translator\TranslatorAdapter\YandexTranslator;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\CachedReader;
+use Instagram\Client\Config\TokenConfig;
+use Instagram\Client\InstagramClient;
+use Instagram\Request\Users\SelfFeedRequest;
 use Instagram\Response\Users\MediaFeed;
+use Instagram\Response\Users\SelfFeed;
 use Kozz\Laravel\Facades\Guzzle;
 use Kozz\Laravel\LaravelDoctrineCache;
 
@@ -52,31 +56,16 @@ class FeedController extends Controller
 
     protected function getPosts($next = false)
     {
-
         $user  = \Auth::getUser();
-        $query = ['access_token' => $user->getToken()];
-
-        if ($next && $next = \Session::get('next_max_id')) {
-            $query['next_max_id'] = $next;
-        }
 
         $data = \Cache::get($user->getToken());
 
         if (!$data) {
+
+            $client = new InstagramClient(new TokenConfig($user->getToken()));
             \Log::info('Instagram call start');
             $t    = microtime(true);
-            $data = $this->call($query);
-            \Log::info(sprintf("Instagram call end, time is %.04F", microtime(true) - $t));
-
-
-            $serializer = \JMS\Serializer\SerializerBuilder::create()
-                ->setAnnotationReader(new CachedReader(new AnnotationReader(), new LaravelDoctrineCache()))
-                ->build();
-
-            \Log::info('Serializer call start');
-            $t = microtime(true);
-            /** @var MediaFeed $data */
-            $data = $serializer->deserialize(json_encode($data), MediaFeed::class, 'json');
+            $data = $client->call(new SelfFeedRequest());
             \Log::info(sprintf("Serializer call end, time is %.04F", microtime(true) - $t));
 
             \Cache::put($user->getToken(), $data, 1);

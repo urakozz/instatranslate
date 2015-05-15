@@ -15,18 +15,18 @@ namespace App\Components\Translator\Adapters;
 
 use App\Components\Translator\ITranslatable;
 use App\Components\Translator\Proxy\InstagramTranslatableProxy;
-use Instagram\Response\InstagramResponse;
+use Instagram\Response\AbstractMediaResponse;
 
 
 class InstagramAdapter extends AbstractTranslatableAdapter
 {
 
     /**
-     * @var InstagramResponse
+     * @var AbstractMediaResponse
      */
     protected $source;
 
-    public function __construct(InstagramResponse $source)
+    public function __construct(AbstractMediaResponse $source)
     {
         $this->source = $source;
     }

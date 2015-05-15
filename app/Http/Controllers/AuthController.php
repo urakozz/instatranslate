@@ -14,6 +14,8 @@ namespace App\Http\Controllers;
 
 
 use GuzzleHttp\Exception\RequestException;
+use Instagram\Client\Config\AuthConfig;
+use Instagram\Client\InstagramAuth;
 
 class AuthController extends Controller
 {
@@ -41,35 +43,24 @@ class AuthController extends Controller
                 throw new \DomainException("Incorrect response code");
             }
 
-            $request = [
-                'client_id' => env('I_CLIENT_ID'),
-                'client_secret' => env('I_CLIENT_SECRET'),
-                'grant_type' => 'authorization_code',
-                'redirect_uri' => \URL::to('/auth'),
-                'code' => $code,
-            ];
-            $client  = new \GuzzleHttp\Client();
-            try {
-                $response = $client->post('https://api.instagram.com/oauth/access_token', ['body' => $request]);
-            } catch (RequestException $e) {
-                if ($e->getCode() === 400) {
-                    throw new \DomainException("Incorrect response code");
-                }
-                throw $e;
+            $client = new InstagramAuth(new AuthConfig(env("I_CLIENT_ID"), env("I_CLIENT_SECRET"), \URL::to('/auth')));
+            $response = $client->retrieveOAuthToken($code);
+            if(!$response->isOk()){
+                throw new \DomainException("Incorrect response code");
             }
+
         } catch (\Exception $e) {
             return view('auth_reject', ['desc' => $e->getMessage()]);
         }
 
-        $json = $response->json();
         $user = new \App\User();
-        $user->setToken($json['access_token']);
-        $user->setBio($json['user']['bio']);
-        $user->setWebsite($json['user']['website']);
-        $user->setFullName($json['user']['full_name']);
-        $user->setUserName($json['user']['username']);
-        $user->setProfilePicture($json['user']["profile_picture"]);
-        $user->setId($json['user']['id']);
+        $user->setToken($response->getAccessToken());
+        $user->setBio("");
+        $user->setWebsite("");
+        $user->setFullName($response->getUser()->getFullName());
+        $user->setUserName($response->getUser()->getUsername());
+        $user->setProfilePicture($response->getUser()->getProfilePicture());
+        $user->setId($response->getUser()->getId());
 
         \Auth::login($user, true);
         return redirect(\URL::to('/'));

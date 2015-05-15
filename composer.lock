@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5ee1376d29271708e80efb4761ddb314",
+    "hash": "9367d354d6ba4144bf4fc2cee3ca962a",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1057,16 +1057,16 @@
         },
         {
             "name": "kozz/instagram-client",
-            "version": "0.0.1",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/urakozz/php-instagram-client.git",
-                "reference": "d67a05fd18b74244f703bc195af4939054c1ae6b"
+                "reference": "af0be921dab937c91fcafa964a2f14961b4c72a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/urakozz/php-instagram-client/zipball/d67a05fd18b74244f703bc195af4939054c1ae6b",
-                "reference": "d67a05fd18b74244f703bc195af4939054c1ae6b",
+                "url": "https://api.github.com/repos/urakozz/php-instagram-client/zipball/af0be921dab937c91fcafa964a2f14961b4c72a4",
+                "reference": "af0be921dab937c91fcafa964a2f14961b4c72a4",
                 "shasum": ""
             },
             "require": {
@@ -1095,7 +1095,7 @@
                 "client",
                 "instagram"
             ],
-            "time": "2015-05-14 14:39:35"
+            "time": "2015-05-15 14:23:09"
         },
         {
             "name": "kozz/laravel-doctrine-cache",
