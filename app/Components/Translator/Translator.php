@@ -13,6 +13,7 @@
 namespace App\Components\Translator;
 
 
+use App\Components\Translator\Repository\ITranslationRepository;
 use App\Components\Translator\TranslatorAdapter\ITranslatorAdapter;
 use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -34,9 +35,9 @@ class Translator
     protected $client;
 
     /**
-     * @var Cache
+     * @var ITranslationRepository
      */
-    protected $cache;
+    protected $repository;
 
     /**
      * @var \SplObjectStorage
@@ -59,12 +60,12 @@ class Translator
     /**
      * Desc
      *
-     * @param Cache $cache
+     * @param ITranslationRepository $repository
      * @return void
      */
-    public function setCache(Cache $cache)
+    public function setRepository(ITranslationRepository $repository)
     {
-        $this->cache = $cache;
+        $this->repository = $repository;
     }
 
     /**
@@ -82,8 +83,8 @@ class Translator
                 /** @var ITranslatable $translatable */
                 $translatable = $this->requestsHash[$event->getRequest()];
                 $translation  = $this->translator->getTranslation($event->getResponse());
-                if ($this->cache) {
-                    $this->cache->save($this->getKey($translatable), $translation, 24 * 60);
+                if ($this->repository) {
+                    $this->repository->save($translatable->getId(), $translation);
                 }
                 $translatable->setTranslation($translation);
             }];
@@ -119,16 +120,8 @@ class Translator
 
     protected function getCachedTranslation(ITranslatable $item)
     {
-        return $this->cache ? $this->cache->fetch($this->getKey($item)) : null;
+        return $this->repository ? $this->repository->get($item->getId()) : null;
     }
-
-    protected function getKey(ITranslatable $item)
-    {
-        $key = "tr_";//. crc32(get_class($this->translator) . ":" . get_class($item));
-        $key .= "_" . $item->getId();
-        return $key;
-    }
-
 
     /**
      * Desc

@@ -16,3 +16,12 @@ Route::get('/', 'WelcomeController@index');
 Route::get('auth', 'AuthController@resolve');
 Route::get('logout', 'AuthController@logout');
 Route::get('feed', 'FeedController@index');
+
+Route::group(['prefix' => 'api', 'namespace' => 'Api'], function()
+{
+    Route::group(['prefix' => 'v1'], function()
+    {
+        Route::resource('translate', 'ApiController', ['only' => ['show']]);
+    });
+
+});
