@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9367d354d6ba4144bf4fc2cee3ca962a",
+    "hash": "ba3fc514c9670103804857eea468583d",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1054,6 +1054,42 @@
                 "xml"
             ],
             "time": "2014-03-18 08:39:00"
+        },
+        {
+            "name": "kozz/awesome-game",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/urakozz/php-awesome-game.git",
+                "reference": "4d0ae14c21f65c28399742ecfe1009ecf7350f75"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/urakozz/php-awesome-game/zipball/4d0ae14c21f65c28399742ecfe1009ecf7350f75",
+                "reference": "4d0ae14c21f65c28399742ecfe1009ecf7350f75",
+                "shasum": ""
+            },
+            "bin": [
+                "game"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Kozz\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Awesome PHP game",
+            "homepage": "https://github.com/urakozz/php-awesome-game",
+            "keywords": [
+                "game",
+                "logic",
+                "php"
+            ],
+            "time": "2015-05-18 08:56:57"
         },
         {
             "name": "kozz/instagram-client",
@@ -4425,6 +4461,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "kozz/laravel-doctrine-cache": 20,
+        "kozz/awesome-game": 20,
         "codeclimate/php-test-reporter": 20
     },
     "prefer-stable": false,
