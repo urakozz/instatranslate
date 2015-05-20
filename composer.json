@@ -11,7 +11,7 @@
 		"guzzlehttp/guzzle":"~5.0",
 		"doctrine/common": "~2.5",
     "kozz/instagram-client": "0.0.2",
-		"kozz/laravel-doctrine-cache": "1.0.*@dev",
+		"kozz/laravel-doctrine-cache": "~1.0",
 		"kozz/laravel-guzzle-provider": "~1.0"
 	},
 	"require-dev": {
