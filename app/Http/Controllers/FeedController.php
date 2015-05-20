@@ -5,14 +5,9 @@ use App\Components\Translator\Adapters\InstagramAdapter;
 use App\Components\Translator\Repository\TranslationRepositoryCache;
 use App\Components\Translator\Translator;
 use App\Components\Translator\TranslatorAdapter\BingTranslator;
-use App\Components\Translator\TranslatorAdapter\YandexTranslator;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Annotations\CachedReader;
 use Instagram\Client\Config\TokenConfig;
 use Instagram\Client\InstagramClient;
 use Instagram\Request\Users\SelfFeedRequest;
-use Instagram\Response\Users\MediaFeed;
-use Instagram\Response\Users\SelfFeed;
 use Kozz\Laravel\Facades\Guzzle;
 use Kozz\Laravel\LaravelDoctrineCache;
 
@@ -29,6 +24,7 @@ class FeedController extends Controller
 
     /**
      * Show the application welcome screen to the user.
+     * @throws \Exception
      *
      * @return \Response
      */
@@ -57,7 +53,7 @@ class FeedController extends Controller
 
     protected function getPosts($next = false)
     {
-        $user  = \Auth::getUser();
+        $user = \Auth::getUser();
 
         $data = \Cache::get($user->getToken());
 
@@ -80,17 +76,6 @@ class FeedController extends Controller
         $translator->translate(new InstagramAdapter($data));
         \Log::info(sprintf("Translator call end, time is %.04F", microtime(true) - $t));
 
-        return $data;
-    }
-
-    protected function call($query)
-    {
-        $response = Guzzle::get('https://api.instagram.com/v1/users/self/feed', ['query' => $query]);
-        $data     = $response->json();
-        $code     = @$data['meta']['code'];
-        if ($code !== 200) {
-            throw new \DomainException("Invalid response");
-        }
         return $data;
     }
 
