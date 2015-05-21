@@ -21,7 +21,7 @@ interface ITranslatorAdapter
 {
     public function getUrl();
 
-    public function getTranslation(ResponseInterface $response);
+    public function applyTranslation(ResponseInterface $response, ITranslatable $item);
 
     public function getRequestAttributes(ITranslatable $item);
 

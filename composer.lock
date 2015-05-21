@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fcb6363bb1fba83158632cfc3c1e0e5e",
+    "hash": "00452ef5ce1f09e522646ac53c1dc7d1",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1054,6 +1054,61 @@
                 "xml"
             ],
             "time": "2014-03-18 08:39:00"
+        },
+        {
+            "name": "kozz/emoji-regex",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/urakozz/php-emoji-regex.git",
+                "reference": "4c847bc3f06ab0ba05a97d8147dc84a587121f87"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/urakozz/php-emoji-regex/zipball/4c847bc3f06ab0ba05a97d8147dc84a587121f87",
+                "reference": "4c847bc3f06ab0ba05a97d8147dc84a587121f87",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "dev-master",
+                "phpunit/phpunit": "~4.2"
+            },
+            "suggest": {
+                "php": ">=5.6.8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kozz\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yury Kozyrev",
+                    "email": "urakozz@gmail.com",
+                    "homepage": "https://github.com/urakozz"
+                }
+            ],
+            "description": "Emoji regex parser",
+            "homepage": "https://github.com/urakozz/php-emoji-regex",
+            "keywords": [
+                "emoji",
+                "regex",
+                "regexp"
+            ],
+            "time": "2015-05-21 08:51:29"
         },
         {
             "name": "kozz/instagram-client",
@@ -4424,6 +4479,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "kozz/emoji-regex": 20,
         "codeclimate/php-test-reporter": 20
     },
     "prefer-stable": false,

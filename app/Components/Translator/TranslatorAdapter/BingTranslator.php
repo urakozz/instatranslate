@@ -17,7 +17,7 @@ use App\Components\Translator\ITranslatable;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\ResponseInterface;
 
-class BingTranslator implements ITranslatorAdapter
+class BingTranslator extends AbstractTranslatorAdapter
 {
 
     public function getUrl()
@@ -26,19 +26,17 @@ class BingTranslator implements ITranslatorAdapter
         return 'https://api.datamarket.azure.com/Bing/MicrosoftTranslator/v1/Translate';
     }
 
-    public function getTranslation(ResponseInterface $response)
+    protected function getTranslation(ResponseInterface $response)
     {
-
         $content = $response->getBody()->getContents();
         $content = json_decode($content);
         return reset($content->d->results)->Text;
-
     }
 
     public function getRequestAttributes(ITranslatable $item)
     {
         return [
-            'Text'=>"'".$item->getText()."'",
+            'Text'=>"'".$this->getCleanedText($item)."'",
             "To"=>"'ru'",
             '$format'=>'json'
         ];

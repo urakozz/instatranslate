@@ -17,7 +17,7 @@ use App\Components\Translator\ITranslatable;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\ResponseInterface;
 
-class YandexTranslator implements ITranslatorAdapter
+class YandexTranslator extends AbstractTranslatorAdapter
 {
 
     protected $url = 'https://translate.yandex.net/api/v1.5/tr.json/translate';
@@ -41,7 +41,7 @@ class YandexTranslator implements ITranslatorAdapter
             'key' => env('Y_API_KEY'),
             'lang' => 'ru',
             'options' => '1',
-            'text' => $item->getText()
+            'text' => $this->getCleanedText($item)
         ];
     }
 

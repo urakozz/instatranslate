@@ -15,7 +15,6 @@ namespace App\Components\Translator;
 
 use App\Components\Translator\Repository\ITranslationRepository;
 use App\Components\Translator\TranslatorAdapter\ITranslatorAdapter;
-use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Collections\ArrayCollection;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Event\CompleteEvent;
@@ -82,11 +81,10 @@ class Translator
             'complete' => function (CompleteEvent $event) {
                 /** @var ITranslatable $translatable */
                 $translatable = $this->requestsHash[$event->getRequest()];
-                $translation  = $this->translator->getTranslation($event->getResponse());
+                $this->translator->applyTranslation($event->getResponse(), $translatable);
                 if ($this->repository) {
-                    $this->repository->save($translatable->getId(), $translation);
+                    $this->repository->save($translatable->getId(), $translatable->getTranslation());
                 }
-                $translatable->setTranslation($translation);
             }];
         $pool    = new Pool($this->client, $requests, $options);
         $pool->wait();
