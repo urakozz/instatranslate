@@ -11,3 +11,10 @@ test:
     - vendor/bin/phpunit --debug --coverage-clover build/logs/clover.xml
   post:
     - vendor/bin/test-reporter
+    
+deployment:
+  staging:
+    branch: master
+    commands:
+      - echo ${CIRCLE_SHA1}:${CIRCLE_BRANCH}
+      - curl --data "env_id=${DPLOY_ENV_ID}&secret=${DPLOY_SECRET}" https://urakozz.dploy.io/webhook/deploy
