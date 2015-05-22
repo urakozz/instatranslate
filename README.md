@@ -11,9 +11,11 @@
 
 #### Deploy
 [![Deployment status from dploy.io](https://urakozz.dploy.io/badge/77558059965650/31834.svg)](http://dploy.io)
+
 **staging** http://staging.i.urakozz.me/
 
 [![Deployment status from dploy.io](https://urakozz.dploy.io/badge/34534835979390/31846.svg)](http://dploy.io)
+
 **production** http://i.urakozz.me/
 
 ## Installation
