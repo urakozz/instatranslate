@@ -10,7 +10,11 @@
 [![Code Climate](https://codeclimate.com/github/urakozz/instatranslate/badges/gpa.svg)](https://codeclimate.com/github/urakozz/instatranslate)
 
 #### Deploy
-[![Deployment status from dploy.io](https://urakozz.dploy.io/badge/77558059965650/31834.svg)](http://dploy.io)
+Staging: [![Deployment status from dploy.io](https://urakozz.dploy.io/badge/77558059965650/31834.svg)](http://dploy.io)
+http://staging.i.urakozz.me/
+
+Production: [![Deployment status from dploy.io](https://urakozz.dploy.io/badge/34534835979390/31846.svg)](http://dploy.io)
+http://i.urakozz.me/
 
 ## Installation
 
