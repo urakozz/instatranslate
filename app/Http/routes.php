@@ -25,3 +25,7 @@ Route::group(['prefix' => 'api', 'namespace' => 'Api'], function()
     });
 
 });
+Route::group(['prefix' => 'callback'], function()
+{
+    Route::get('users', 'CallbackController@users');
+});
