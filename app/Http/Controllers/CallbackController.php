@@ -6,6 +6,7 @@ class CallbackController extends Controller
     public function users()
     {
         \Log::info(json_encode($_GET));
+        return \Input::get('hub.challenge');
     }
 
 }
