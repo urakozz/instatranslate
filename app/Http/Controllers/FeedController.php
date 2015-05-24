@@ -8,7 +8,6 @@ use App\Components\Translator\TranslatorAdapter\BingTranslator;
 use Instagram\Client\Config\TokenConfig;
 use Instagram\Client\InstagramClient;
 use Instagram\Request\Users\SelfFeedRequest;
-use Instagram\Response\Users\SelfFeed;
 use Kozz\Laravel\Facades\Guzzle;
 use Kozz\Laravel\LaravelDoctrineCache;
 
@@ -33,15 +32,13 @@ class FeedController extends Controller
     {
         \Session::set('next_max_id', null);
         try {
-            //$data = $this->getPosts();
+            $data = $this->getPosts();
         } catch (\Exception $e) {
 //            \Session::clear();
 //            return redirect("/logout");
             throw $e;
         }
-        $feed = new SelfFeed();
-        $feed->setData([]);
-        return view('feed', ['data' => $feed]);
+        return view('feed', ['data' => $data]);
     }
 
     public function next()
