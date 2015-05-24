@@ -2,7 +2,8 @@
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
-class Kernel extends HttpKernel {
+class Kernel extends HttpKernel
+{
 
 	/**
 	 * The application's global HTTP middleware stack.
@@ -15,17 +16,18 @@ class Kernel extends HttpKernel {
 		\Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
 		\Illuminate\Session\Middleware\StartSession::class,
 		\Illuminate\View\Middleware\ShareErrorsFromSession::class,
-		\App\Http\Middleware\VerifyCsrfToken::class,
 	];
 
-	/**
-	 * The application's route middleware.
-	 *
-	 * @var array
-	 */
-	protected $routeMiddleware = [
-		'auth' => Middleware\Authenticate::class,
-		'guest' => Middleware\RedirectIfAuthenticated::class,
-	];
+    /**
+     * The application's route middleware.
+     *
+     * @var array
+     */
+    protected $routeMiddleware = [
+        'auth' => Middleware\Authenticate::class,
+        'csrf' => Middleware\VerifyCsrfToken::class,
+        'guest' => Middleware\RedirectIfAuthenticated::class,
+        'callback_users' => Middleware\VerifyHubChallenge::class,
+    ];
 
 }

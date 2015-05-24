@@ -121,7 +121,7 @@ return [
         \Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
         \Illuminate\Routing\ControllerServiceProvider::class,
         \Illuminate\Cookie\CookieServiceProvider::class,
-//        \Illuminate\Database\DatabaseServiceProvider::class,
+        \Illuminate\Database\DatabaseServiceProvider::class,
         \Illuminate\Encryption\EncryptionServiceProvider::class,
         \Illuminate\Filesystem\FilesystemServiceProvider::class,
         \Illuminate\Foundation\Providers\FoundationServiceProvider::class,

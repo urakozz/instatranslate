@@ -111,7 +111,7 @@ class Translator
                 $j++;
             }
         }
-        var_dump($i, $j);//die;
+        //var_dump($i, $j);//die;
 
         return $requests;
     }

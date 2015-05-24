@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Commands\GetTranslations;
 use App\Components\Translator\Adapters\InstagramAdapter;
 use App\Components\Translator\Repository\TranslationRepositoryCache;
 use App\Components\Translator\Translator;
@@ -31,6 +32,7 @@ class FeedController extends Controller
     public function index()
     {
         \Session::set('next_max_id', null);
+        \Queue::push(new GetTranslations(\Auth::getUser()->getToken()));
         try {
             $data = $this->getPosts();
         } catch (\Exception $e) {
@@ -44,7 +46,7 @@ class FeedController extends Controller
     public function next()
     {
         try {
-            $data = $this->getPosts(true);
+            $data = $this->getPosts();
         } catch (\Exception $e) {
             return redirect("/logout");
         }
@@ -63,18 +65,18 @@ class FeedController extends Controller
             \Log::info('Instagram call start');
             $t    = microtime(true);
             $data = $client->call(new SelfFeedRequest());
-            \Log::info(sprintf("Serializer call end, time is %.04F", microtime(true) - $t));
+            \Log::info(sprintf("Instagram call end, time is %.04F", microtime(true) - $t));
 
             \Cache::put($user->getToken(), $data, 1);
         }
 
 
-        \Log::info('Translator call start');
-        $t          = microtime(true);
-        $translator = new Translator(Guzzle::getFacadeRoot(), new BingTranslator());
-        $translator->setRepository(new TranslationRepositoryCache(new LaravelDoctrineCache()));
-        $translator->translate(new InstagramAdapter($data));
-        \Log::info(sprintf("Translator call end, time is %.04F", microtime(true) - $t));
+//        \Log::info('Translator call start');
+//        $t          = microtime(true);
+//        $translator = new Translator(Guzzle::getFacadeRoot(), new BingTranslator());
+//        $translator->setRepository(new TranslationRepositoryCache(new LaravelDoctrineCache()));
+//        $translator->translate(new InstagramAdapter($data));
+//        \Log::info(sprintf("Translator call end, time is %.04F", microtime(true) - $t));
 
         return $data;
     }

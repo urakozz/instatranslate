@@ -2,9 +2,10 @@
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Http\RedirectResponse;
 
-class RedirectIfAuthenticated
+class RedirectIfAuthenticated implements Middleware
 {
 
     /**
