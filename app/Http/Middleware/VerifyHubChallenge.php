@@ -27,7 +27,7 @@ class VerifyHubChallenge implements Middleware
      */
     public function handle($request, Closure $next)
     {
-        if($request->get("hub_challenge") !== env("I_CALLBACK_USERS")){
+        if(in_array(env("I_CALLBACK_USERS"), [$request->get("hub_challenge"), $_SERVER['HTTP_X_HUB_SIGNATURE']])){
             return response('Unauthorized.', 401);
         }
 

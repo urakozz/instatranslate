@@ -45,6 +45,9 @@ class GetTranslations extends Command implements SelfHandling, ShouldBeQueued
         }
         $client = new InstagramClient(new TokenConfig($this->token));
         $data = $client->call(new SelfFeedRequest());
+        if(!$data->isOk()){
+            return "Token Expired: ".$this->token;
+        }
 
         $translator = new Translator(Guzzle::getFacadeRoot(), new BingTranslator());
         $translator->setRepository(new TranslationRepositoryCache(new LaravelDoctrineCache()));

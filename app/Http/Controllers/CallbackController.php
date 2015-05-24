@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Commands\GetTranslations;
+use App\Components\Storage\UserStorage;
 
 class CallbackController extends Controller
 {
@@ -18,7 +19,21 @@ class CallbackController extends Controller
 
     public function usersPost()
     {
-//        \Queue::push(new GetTranslations(json_decode(file_get_contents('php://input'))));
+        $json = \Request::instance()->getContent();
+        $response = json_decode($json);
+        $first = reset($response);
+        $userId = $first->object_id;
+        $mediaId = $first->data->media_id;
+        \Log::info($userId);
+        \Log::info($mediaId);
+        $storage = new UserStorage(\Redis::connection());
+        $user = $storage->getByPk($userId);
+        if(!$user){
+            return;
+        }
+        \Log::info(json_encode($user));
+
+        \Queue::push(new GetTranslations($user->getToken()));
         return \Input::get('hub_challenge');
     }
 

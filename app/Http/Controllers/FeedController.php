@@ -36,9 +36,8 @@ class FeedController extends Controller
         try {
             $data = $this->getPosts();
         } catch (\Exception $e) {
-//            \Session::clear();
-//            return redirect("/logout");
-            throw $e;
+            \Session::clear();
+            return redirect("/logout");
         }
         return view('feed', ['data' => $data]);
     }
@@ -65,6 +64,10 @@ class FeedController extends Controller
             \Log::info('Instagram call start');
             $t    = microtime(true);
             $data = $client->call(new SelfFeedRequest());
+            if(!$data->isOk()){
+                \Log::info("userId: ".\Auth::getUser()->getId(). "Error: ".$data->getErrorMessage());
+                throw new \DomainException("Token Expired");
+            }
             \Log::info(sprintf("Instagram call end, time is %.04F", microtime(true) - $t));
 
             \Cache::put($user->getToken(), $data, 1);
