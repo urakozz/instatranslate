@@ -74,6 +74,6 @@ return [
     |
     */
 
-    'prefix' => 'laravel',
+    'prefix' => 'laravel_cache_'.env('APP_ENV'),
 
 ];
