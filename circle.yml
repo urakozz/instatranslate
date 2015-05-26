@@ -15,8 +15,8 @@ dependencies:
 
 test:
   pre:
-    - node_modules/.bin/bower install
-    - node_modules/.bin/gulp
+    - bower install
+    - gulp
   override:
     - vendor/bin/phpunit --debug --coverage-clover build/logs/clover.xml
   post:
