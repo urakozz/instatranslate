@@ -3,11 +3,16 @@ machine:
     version: 5.5.11
   node:
     version: 0.10.38
+  environment:
+    PATH: ${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin
+    TZ: Europe/Berlin
+
 dependencies:
   pre:
     - sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
   cache_directories:
     - vendor
+
 test:
   pre:
     - bower install
