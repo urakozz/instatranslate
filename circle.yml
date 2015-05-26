@@ -6,7 +6,12 @@ machine:
 dependencies:
   pre:
     - sed -i 's/^;//' ~/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+  cache_directories:
+    - vendor
 test:
+  pre:
+    - bower install
+    - gulp
   override:
     - vendor/bin/phpunit --debug --coverage-clover build/logs/clover.xml
   post:
