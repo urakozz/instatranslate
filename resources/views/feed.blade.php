@@ -40,63 +40,66 @@
                     </div>
                     <div class="it-post-comments">
                         @if($post->getCaption())
-                            <div class="it-post-comment {{$post->getCaption()->isTranslated() ? 'it-post-comment__light-border':'it-post-comment__strong-border'}}">
-                                <a href="javascript:void(0)">
-                                    <div class="it-post-comment-avatar it-thumbnail">
-                                        <div class="it-thumbnail-i"
-                                             style="background-image:url({{ $post->getCaption()->getFrom()->getProfilePicture() }});"></div>
-                                    </div>
-                                </a>
-                                <a class="it-post-comment-author it-link-no-hover" href="javascript:void(0)">
-                                    {{$post->getCaption()->getFrom()->getUsername()}}
-                                </a>
-                                <span class="it-post-comment-text">
-                                    {{$post->getCaption()->getText()}}
-                                </span>
-                            </div>
-                            @if($post->getCaption()->isTranslated())
-                                <div class="it-post-comment it-post-comment__strong-border">
+                            <div class="translatable translatable__caption translatable_translated_no">
+                                <div class="it-post-comment translatable__source"
+                                     data-mediaid="{{$post->getCaption()->getId()}}"
+                                     data-userid="{{$post->getCaption()->getFrom()->getId()}}">
+                                    <a href="javascript:void(0)">
+                                        <div class="it-post-comment-avatar it-thumbnail">
+                                            <div class="it-thumbnail-i"
+                                                 style="background-image:url({{ $post->getCaption()->getFrom()->getProfilePicture() }});"></div>
+                                        </div>
+                                    </a>
+                                    <a class="it-post-comment-author it-link-no-hover" href="javascript:void(0)">
+                                        {{$post->getCaption()->getFrom()->getUsername()}}
+                                    </a>
+                                    <span class="it-post-comment-text">
+                                        {{$post->getCaption()->getText()}}
+                                    </span>
+                                </div>
+                                <div class="it-post-comment translatable__translation">
                                     <a href="javascript:void(0)">
                                         <div class="it-post-comment-avatar it-thumbnail">
                                             <div class="it-thumbnail-i"></div>
                                         </div>
                                     </a>
 
-                                    <span class="it-post-comment-text">
-                                        {{$post->getCaption()->getTranslation()}}
-                                    </span>
+                                    <span class="it-post-comment-text"></span>
                                 </div>
-                            @endif
+                            </div>
+                        @endif
                             <div class="it-scroll-area">
                                 <div class="it-scroll-area-content">
                                     @foreach($post->getComments()->getData() as $comment)
-                                        <div class="it-post-comment {{$comment->isTranslated() ? null : 'it-post-comment__light-border'}}">
-                                            <a href="javascript:void(0)">
-                                                <div class="it-post-comment-avatar it-thumbnail">
-                                                    <div class="it-thumbnail-i"
-                                                         style="background-image:url({{ $comment->getFrom()->getProfilePicture() }});"></div>
-                                                </div>
-                                            </a>
-                                            <a class="it-post-comment-author it-link-no-hover"
-                                               href="javascript:void(0)">
-                                                {{$comment->getFrom()->getUsername()}}
-                                            </a>
-                                            <span class="it-post-comment-text">
-                                                {{$comment->getText()}}
-                                            </span>
-                                        </div>
-                                        @if($comment->isTranslated())
-                                            <div class="it-post-comment it-post-comment__light-border">
+                                        <div class="translatable translatable__comment translatable_translated_no">
+                                            <div class="it-post-comment translatable__source"
+                                                 data-mediaid="{{$comment->getId()}}"
+                                                 data-userid="{{$comment->getFrom()->getId()}}">
+                                                <a href="javascript:void(0)">
+                                                    <div class="it-post-comment-avatar it-thumbnail">
+                                                        <div class="it-thumbnail-i"
+                                                             style="background-image:url({{ $comment->getFrom()->getProfilePicture() }});"></div>
+                                                    </div>
+                                                </a>
+                                                <a class="it-post-comment-author it-link-no-hover"
+                                                   href="javascript:void(0)">
+                                                    {{$comment->getFrom()->getUsername()}}
+                                                </a>
+                                                <span class="it-post-comment-text">
+                                                    {{$comment->getText()}}
+                                                </span>
+                                            </div>
+{{--                                        @if($comment->isTranslated())--}}
+                                            <div class="it-post-comment translatable__translation it-post-comment__light-border">
                                                 <a href="javascript:void(0)">
                                                     <div class="it-post-comment-avatar it-thumbnail">
                                                         <div class="it-thumbnail-i"></div>
                                                     </div>
                                                 </a>
-                                                <span class="it-post-comment-text">
-                                                    {{$comment->getTranslation()}}
-                                                </span>
+                                                <span class="it-post-comment-text"></span>
                                             </div>
-                                        @endif
+                                        {{--@endif--}}
+                                            </div>
                                     @endforeach
                                 </div>
                             </div>
@@ -108,12 +111,10 @@
                                     </form>
                                 </div>
                             </div>
-                        @endif
                     </div>
                 </div>
 
             </div>
-            <!--<pre>{{var_export($post)}}</pre>-->
         </div>
     @empty
         <p>No posts yet</p>

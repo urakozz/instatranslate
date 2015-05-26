@@ -76,7 +76,6 @@ abstract class AbstractTranslatorAdapter implements ITranslatorAdapter, ITransla
 //        var_dump($hashTags);
         $translation = str_replace($hashTags->getKeys(), $hashTags->getValues(), $translation);
         $item->setTranslation($translation);
-        echo "</pre>";
     }
 
     abstract protected function getTranslation(ResponseInterface $response);
