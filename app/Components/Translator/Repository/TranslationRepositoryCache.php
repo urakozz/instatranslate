@@ -64,4 +64,15 @@ class TranslationRepositoryCache implements ITranslationRepository
     {
         return $this->cache->fetch($this->getKey($id));
     }
+
+    /**
+     * Desc
+     *
+     * @param $id
+     * @return bool
+     */
+    public function has($id)
+    {
+        return $this->cache->contains($id);
+    }
 }

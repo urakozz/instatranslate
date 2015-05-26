@@ -93,7 +93,7 @@ class Translator
     /**
      * Desc
      *
-     * @param ITranslatableContainer $container
+     * @param ITranslatableContainer|ITranslatable[] $container
      * @return \GuzzleHttp\Message\RequestInterface[]
      */
     protected function generateRequests(ITranslatableContainer $container)
@@ -101,7 +101,8 @@ class Translator
         $requests = [];
         $i        = $j = 0;
         foreach ($container as $item) {
-            if ($cachedTranslation = $this->getCachedTranslation($item)) {
+            if ($this->hasCachedTranslation($item)) {
+                $cachedTranslation = $this->getCachedTranslation($item);
                 $item->setTranslation($cachedTranslation);
                 $i++;
             } else {
@@ -119,6 +120,11 @@ class Translator
     protected function getCachedTranslation(ITranslatable $item)
     {
         return $this->repository ? $this->repository->get($item->getId()) : null;
+    }
+
+    protected function hasCachedTranslation(ITranslatable $item)
+    {
+        return $this->repository ? $this->repository->has($item->getId()) : false;
     }
 
     /**

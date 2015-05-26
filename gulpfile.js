@@ -15,14 +15,15 @@ var paths = {
  | file for our application, as well as publishing vendor resources.
  |
  */
-
+elixir.config.sourcemaps = false;
 elixir(function (mix) {
     mix
         .sass("app.scss", 'public/css/', {includePaths: [paths.bootstrap + 'stylesheets']})
-        .copy(paths.bootstrap + 'fonts/bootstrap/**', 'public/fonts')
+        .copy(paths.bootstrap + 'fonts/bootstrap/**', 'public/build/fonts')
         .scripts([
             paths.jquery + "dist/jquery.js",
             paths.bootstrap + "javascripts/bootstrap.js",
             paths.appScripts + "**"
         ], 'public/js/app.js', './');
+    mix.version(["css/app.css", "js/app.js"]);
 });

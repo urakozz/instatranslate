@@ -29,4 +29,9 @@ class TranslationRepositoryNone implements ITranslationRepository
     {
         return null;
     }
+
+    public function has($id)
+    {
+        return false;
+    }
 }

@@ -68,6 +68,9 @@ abstract class AbstractTranslatorAdapter implements ITranslatorAdapter, ITransla
     public function applyTranslation(ResponseInterface $response, ITranslatable $item)
     {
         $translation = $this->getTranslation($response);
+        if($translation === $item->getText()){
+            return;
+        }
 
         $emoji       = $this->emojiStorage[$item];
 //        var_dump($emoji);

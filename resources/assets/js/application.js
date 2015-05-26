@@ -17,7 +17,10 @@ if (typeof jQuery === 'undefined') {
 +function ($) {
     'use strict';
 
+
     $('.it-post-comment').on('click', function () {
+        console.log(this);
+
         var translatable = $(this).parent(".translatable");
         var source = translatable.find(".translatable__source");
         var translation = translatable.find(".translatable__translation");

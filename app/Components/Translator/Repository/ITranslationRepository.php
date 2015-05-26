@@ -20,4 +20,7 @@ interface ITranslationRepository
     public function save($id, $text);
 
     public function get($id);
+
+    public function has($id);
+
 }
