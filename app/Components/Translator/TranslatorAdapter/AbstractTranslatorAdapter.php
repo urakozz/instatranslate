@@ -69,7 +69,7 @@ abstract class AbstractTranslatorAdapter implements ITranslatorAdapter, ITransla
         unset($i);
         $this->emojiStorage->attach($item, $matches);
 
-        $this->cleanedTextStorage->attach($item, $text);
+        $this->textStorage->attach($item, $text);
         return $text;
     }
 
