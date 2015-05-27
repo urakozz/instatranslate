@@ -1,9 +1,12 @@
 var elixir = require('laravel-elixir');
 
+
+var assets= './resources/assets/';
 var paths = {
-    'jquery': './resources/assets/vendor/jquery/',
-    'bootstrap': './resources/assets/vendor/bootstrap-sass/assets/',
-    'appScripts': './resources/assets/js/'
+    'jquery': assets + 'vendor/jquery/',
+    'bootstrap': assets + 'vendor/bootstrap-sass/assets/',
+    'fontAwesome': assets + 'vendor/font-awesome/',
+    'appScripts': assets + 'js/'
 };
 /*
  |--------------------------------------------------------------------------
@@ -18,8 +21,9 @@ var paths = {
 elixir.config.sourcemaps = false;
 elixir(function (mix) {
     mix
-        .sass("app.scss", 'public/css/', {includePaths: [paths.bootstrap + 'stylesheets']})
+        .sass("app.scss", 'public/css/', {includePaths: [paths.bootstrap + 'stylesheets', paths.fontAwesome + "scss"]})
         .copy(paths.bootstrap + 'fonts/bootstrap/**', 'public/build/fonts')
+        .copy(paths.fontAwesome + 'fonts/**', 'public/build/fonts')
         .scripts([
             paths.jquery + "dist/jquery.js",
             paths.bootstrap + "javascripts/bootstrap.js",

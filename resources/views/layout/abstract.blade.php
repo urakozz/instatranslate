@@ -18,8 +18,6 @@
     <![endif]-->
 </head>
 
-</head>
-
 @section('body')
 <body>
 @yield('content')

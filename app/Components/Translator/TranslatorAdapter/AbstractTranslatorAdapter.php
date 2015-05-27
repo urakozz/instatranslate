@@ -29,6 +29,11 @@ abstract class AbstractTranslatorAdapter implements ITranslatorAdapter, ITransla
      */
     protected $emojiStorage;
 
+    /**
+     * @var \SplObjectStorage|string[]
+     */
+    protected $cleanedTextStorage;
+
     public function __construct()
     {
         $this->hashTagStorage = new \SplObjectStorage();
@@ -41,7 +46,7 @@ abstract class AbstractTranslatorAdapter implements ITranslatorAdapter, ITransla
 
         $i       = 0;
         $matches = new ArrayCollection();
-        $parser = new EmojiParser();
+        $parser  = new EmojiParser();
         $parser->setPrepend("#(?:[\\w]|");
         $text = $parser->replaceCallback($text, function ($match) use (&$i, $matches) {
             $key = '{' . $i++ . '}';
@@ -62,17 +67,20 @@ abstract class AbstractTranslatorAdapter implements ITranslatorAdapter, ITransla
         });
         unset($i);
         $this->emojiStorage->attach($item, $matches);
+
+        $this->cleanedTextStorage->attach($item, $text);
         return $text;
     }
 
     public function applyTranslation(ResponseInterface $response, ITranslatable $item)
     {
         $translation = $this->getTranslation($response);
-        if($translation === $item->getText()){
+
+        if ($translation === $this->cleanedTextStorage[$item]) {
             return;
         }
 
-        $emoji       = $this->emojiStorage[$item];
+        $emoji = $this->emojiStorage[$item];
 //        var_dump($emoji);
         $translation = str_replace($emoji->getKeys(), $emoji->getValues(), $translation);
         $hashTags    = $this->hashTagStorage[$item];
