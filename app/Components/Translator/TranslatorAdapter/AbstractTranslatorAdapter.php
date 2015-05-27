@@ -32,12 +32,13 @@ abstract class AbstractTranslatorAdapter implements ITranslatorAdapter, ITransla
     /**
      * @var \SplObjectStorage|string[]
      */
-    protected $cleanedTextStorage;
+    protected $textStorage;
 
     public function __construct()
     {
         $this->hashTagStorage = new \SplObjectStorage();
         $this->emojiStorage   = new \SplObjectStorage();
+        $this->textStorage    = new \SplObjectStorage();
     }
 
     public function getCleanedText(ITranslatable $item)
@@ -76,7 +77,7 @@ abstract class AbstractTranslatorAdapter implements ITranslatorAdapter, ITransla
     {
         $translation = $this->getTranslation($response);
 
-        if ($translation === $this->cleanedTextStorage[$item]) {
+        if ($translation === $this->textStorage[$item]) {
             return;
         }
 
