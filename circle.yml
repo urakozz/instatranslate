@@ -23,12 +23,9 @@ test:
     - vendor/bin/test-reporter
     
 deployment:
-  aws:
-    branch: master
-    commands:
-     - php artisan assets:s3publish --commit=${CIRCLE_SHA1} --branch=${CIRCLE_BRANCH}
   staging:
     branch: master
     commands:
       - echo ${CIRCLE_SHA1}:${CIRCLE_BRANCH}
+      - php artisan assets:s3publish --commit=${CIRCLE_SHA1} --branch=${CIRCLE_BRANCH}
       - curl --data "env_id=${DPLOY_ENV_ID}&secret=${DPLOY_SECRET}" https://urakozz.dploy.io/webhook/deploy
