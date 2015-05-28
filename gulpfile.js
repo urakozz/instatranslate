@@ -22,12 +22,13 @@ elixir.config.sourcemaps = false;
 elixir(function (mix) {
     mix
         .sass("app.scss", 'public/css/', {includePaths: [paths.bootstrap + 'stylesheets', paths.fontAwesome + "scss"]})
-        .copy(paths.bootstrap + 'fonts/bootstrap/**', 'public/build/fonts')
-        .copy(paths.fontAwesome + 'fonts/**', 'public/build/fonts')
         .scripts([
             paths.jquery + "dist/jquery.js",
             paths.bootstrap + "javascripts/bootstrap.js",
             paths.appScripts + "**"
         ], 'public/js/app.js', './');
     mix.version(["css/app.css", "js/app.js"]);
+    mix
+        .copy(paths.bootstrap + 'fonts/bootstrap/**', 'public/build/fonts')
+        .copy(paths.fontAwesome + 'fonts/**', 'public/build/fonts')
 });

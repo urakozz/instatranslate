@@ -8,6 +8,7 @@ use League\Flysystem\AwsS3v2\AwsS3Adapter;
 use League\Flysystem\Filesystem;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator;
 
 class AssetsS3Publish extends Command
 {
@@ -39,7 +40,7 @@ class AssetsS3Publish extends Command
         $client = S3Client::factory([
             'key' => env('AWS_CLIENT_ID'),
             'secret' => env('AWS_CLIENT_SECRET'),
-            'region' => "eu-west-1"
+            'region' => env("AWS_REGION")
         ]);
 
         $this->filesystem = new Filesystem(new AwsS3Adapter($client, env('AWS_S3_BUCKET')));
@@ -53,25 +54,64 @@ class AssetsS3Publish extends Command
      */
     public function fire()
     {
-        $directory   = implode("/", ["configs", $this->option('branch'), $this->option('commit')]);
-        $refManifest = new \SplFileObject(__DIR__ . "/../../../public/build/rev-manifest.json");
-        $fileNameS3  = implode("/", [$directory, $refManifest->getFilename()]);
-        $this->filesystem->createDir($directory);
-        $this->filesystem->has($fileNameS3) && $this->filesystem->delete($fileNameS3);
-        $json = file_get_contents($refManifest->getPathname());
-        $this->filesystem->write($fileNameS3, $json);
-        $prefixLocal = $refManifest->getPath();
-        $prefixS3    = "assets/build";
-        $files       = json_decode($json, true);
-        foreach ($files as $file) {
-            $fileLocal = $prefixLocal . '/' . $file;
-            $fileS3    = $prefixS3 . "/" . $file;
-            $this->filesystem->writeStream($fileS3, fopen($fileLocal, 'r'));
+        if ("rollout" === $this->argument('rollout')) {
+            return $this->rollout();
         }
+        $this->upload();
+    }
 
-//        $this->filesystem->createDir('data.txt', 'Hello!', array('ACL' => S3::ACL_PUBLIC_READ));
+    protected function upload()
+    {
+        $fileNameLocal = $this->getManifestLocalPath();
+        $fileNameS3    = $this->getManifestS3Path();
+        $this->filesystem->has($fileNameS3) && $this->filesystem->delete($fileNameS3);
+        $json = file_get_contents($fileNameLocal);
+        $this->filesystem->write($fileNameS3, $json);
 
+        $it = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator(
+                dirname($fileNameLocal),
+                \FilesystemIterator::SKIP_DOTS |
+                \FilesystemIterator::CURRENT_AS_FILEINFO |
+                \FilesystemIterator::KEY_AS_PATHNAME
+            )
+        );
+        foreach ($it as $filePath => $fileInfo) {
+            if (!$it->getDepth()) {
+                continue;
+            }
 
+            $s3path = "assets/build" . mb_substr($fileInfo->getPathname(), mb_strlen(dirname($fileNameLocal)));
+
+            if (!$this->filesystem->has($s3path)) {
+                $this->filesystem->writeStream($s3path, fopen($fileInfo->getPathname(), 'r'), ['ACL' => 'public-read']);
+            }
+        }
+        return true;
+    }
+
+    protected function rollout()
+    {
+        $fileNameS3 = $this->getManifestS3Path();
+        $manifest   = $this->filesystem->read($fileNameS3);
+        file_put_contents($this->getManifestLocalPath(), $manifest);
+
+        return true;
+    }
+
+    protected function getManifestLocalPath()
+    {
+        return public_path() . "/build/rev-manifest.json";
+    }
+
+    protected function getManifestS3Path()
+    {
+        return implode("/", [
+            "configs",
+            $this->option('branch'),
+            $this->option('commit'),
+            "rev-manifest.json"
+        ]);
     }
 
     /**
@@ -82,7 +122,7 @@ class AssetsS3Publish extends Command
     protected function getArguments()
     {
         return [
-//			['commit', InputArgument::REQUIRED, 'Commit id'],
+            ['rollout', InputArgument::OPTIONAL, 'Flag means you are performing roll out'],
         ];
     }
 
