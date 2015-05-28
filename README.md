@@ -33,6 +33,16 @@ gulp
 
 ```
 
+## Services Stack
+
+ - IaaS: DigitalOcean
+ - CI + CD: CircleCI
+ - Quality: Scrutinizer + CodeClimate
+ - Deployment: dploy.io
+ - Assets Storage: AWS S3
+ - Assets CDN: AWS CloudFront
+ - DNS + Caching CDN: Cloudflare
+
 ## IDE Helper
 
 ```
