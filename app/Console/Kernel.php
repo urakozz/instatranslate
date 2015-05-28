@@ -1,29 +1,32 @@
 <?php namespace App\Console;
 
+use App\Console\Commands\AssetsS3Publish;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
-class Kernel extends ConsoleKernel {
+class Kernel extends ConsoleKernel
+{
 
-	/**
-	 * The Artisan commands provided by your application.
-	 *
-	 * @var array
-	 */
-	protected $commands = [
-		'App\Console\Commands\Inspire',
-	];
+    /**
+     * The Artisan commands provided by your application.
+     *
+     * @var array
+     */
+    protected $commands = [
+        'App\Console\Commands\Inspire',
+        AssetsS3Publish::class
+    ];
 
-	/**
-	 * Define the application's command schedule.
-	 *
-	 * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-	 * @return void
-	 */
-	protected function schedule(Schedule $schedule)
-	{
-		$schedule->command('inspire')
-				 ->hourly();
-	}
+    /**
+     * Define the application's command schedule.
+     *
+     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
+     * @return void
+     */
+    protected function schedule(Schedule $schedule)
+    {
+//        $schedule->command('inspire')
+//            ->hourly();
+    }
 
 }

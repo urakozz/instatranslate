@@ -16,13 +16,17 @@ dependencies:
 test:
   pre:
     - bower install
-    - gulp
+    - gulp --production
   override:
     - vendor/bin/phpunit --debug --coverage-clover build/logs/clover.xml
   post:
     - vendor/bin/test-reporter
     
 deployment:
+  aws:
+    branch: master
+    commands:
+     - php artisan assets:s3publish --commit=${CIRCLE_SHA1} --branch=${CIRCLE_BRANCH}
   staging:
     branch: master
     commands:

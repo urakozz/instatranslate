@@ -69,7 +69,8 @@ class ApiController extends Controller
             }
             $translation = $cache->get($id);
         }
-        return new JsonResponse(['id'=>$id, 'translation'=>$translation]);
+        $status = $translation ? 200 : 404;
+        return new JsonResponse(['id'=>$id, 'translation'=>$translation], $status);
     }
 
     /**
