@@ -10,6 +10,8 @@
 		"jms/serializer":"~0.16",
 		"guzzlehttp/guzzle":"~5.0",
 		"doctrine/common": "~2.5",
+		"league/flysystem": "~1.0.0",
+		"league/flysystem-aws-s3-v2":"~1.0.0",
     "kozz/instagram-client": "0.0.3",
 		"kozz/emoji-regex":"1.0.*@dev",
 		"kozz/laravel-doctrine-cache": "~1.0",
@@ -21,8 +23,6 @@
 		"mockery/mockery":"~0.9.0",
 		"filp/whoops": "~1.0",
 		"barryvdh/laravel-ide-helper": "~2.0",
-		"league/flysystem": "~1.0.0",
-		"league/flysystem-aws-s3-v2":"~1.0.0",
 		"codeclimate/php-test-reporter": "dev-master"
 	},
 	"autoload": {
