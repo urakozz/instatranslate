@@ -14,7 +14,7 @@ namespace App\Components\Translator\TranslatorAdapter;
 
 use App\Components\Translator\ITranslatable;
 use Doctrine\Common\Collections\ArrayCollection;
-use GuzzleHttp\Message\ResponseInterface;
+use Psr\Http\Message\ResponseInterface;
 use Kozz\Components\Emoji\EmojiParser;
 
 abstract class AbstractTranslatorAdapter implements ITranslatorAdapter, ITranslatorTextCleaner

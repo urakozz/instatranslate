@@ -15,7 +15,7 @@ namespace App\Components\Translator\TranslatorAdapter;
 
 use App\Components\Translator\ITranslatable;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Message\ResponseInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class BingTranslator extends AbstractTranslatorAdapter
 {
@@ -49,6 +49,6 @@ class BingTranslator extends AbstractTranslatorAdapter
 
     public function createRequest(ClientInterface $client, ITranslatable $item)
     {
-        return $client->createRequest("GET", $this->getUrl(), ['query'=>$this->getRequestAttributes($item), 'auth'=>$this->getBasicAuth()]);
+        return $client->requestAsync("GET", $this->getUrl(), ['query'=>$this->getRequestAttributes($item), 'auth'=>$this->getBasicAuth()]);
     }
 }

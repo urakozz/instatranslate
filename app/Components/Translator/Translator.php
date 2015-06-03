@@ -17,8 +17,10 @@ use App\Components\Translator\Repository\ITranslationRepository;
 use App\Components\Translator\TranslatorAdapter\ITranslatorAdapter;
 use Doctrine\Common\Collections\ArrayCollection;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Event\CompleteEvent;
 use GuzzleHttp\Pool;
+use GuzzleHttp\Promise\EachPromise;
+use GuzzleHttp\Promise\PromiseInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class Translator
 {
@@ -39,7 +41,7 @@ class Translator
     protected $repository;
 
     /**
-     * @var \SplObjectStorage
+     * @var ArrayCollection
      */
     protected $requestsHash;
 
@@ -53,7 +55,7 @@ class Translator
         $this->translator    = $translator;
         $this->sourcesMap    = new ArrayCollection();
         $this->translatedMap = new ArrayCollection();
-        $this->requestsHash  = new \SplObjectStorage();
+        $this->requestsHash  = new ArrayCollection();
     }
 
     /**
@@ -75,26 +77,45 @@ class Translator
      */
     public function translate(ITranslatableContainer $container)
     {
-        $requests = $this->generateRequests($container);
 
-        $options = [
-            'complete' => function (CompleteEvent $event) {
-                /** @var ITranslatable $translatable */
-                $translatable = $this->requestsHash[$event->getRequest()];
-                $this->translator->applyTranslation($event->getResponse(), $translatable);
+        $requests  = $this->generateRequests($container);
+        $responses = new \ArrayObject();
+        $rejected  = new \ArrayObject();
+
+        $promise = new EachPromise($requests, [
+            'fulfilled' => function (ResponseInterface $value, $idx, PromiseInterface $p) use ($responses) {
+                $translatable = $this->requestsHash->get($idx);
+                $this->translator->applyTranslation($value, $translatable);
                 if ($this->repository) {
                     $this->repository->save($translatable->getId(), $translatable->getTranslation());
                 }
-            }];
-        $pool    = new Pool($this->client, $requests, $options);
-        $pool->wait();
+            },
+            'rejected' => function ($reason, $idx, PromiseInterface $aggregate) use ($rejected) {
+                $rejected[$idx] = $reason;
+            }
+        ]);
+
+        $res = $promise
+            ->promise()
+            ->then(function () use ($responses) {
+                return $responses;
+            })
+            ->wait();
+//        var_dump($responses);
+//        echo "<br>---------------<br>";
+//        var_dump($res);
+//
+//        echo "<br>---------------<br>";
+//        var_dump(count($rejected));
+//        die;
+
     }
 
     /**
      * Desc
      *
      * @param ITranslatableContainer|ITranslatable[] $container
-     * @return \GuzzleHttp\Message\RequestInterface[]
+     * @return PromiseInterface[]
      */
     protected function generateRequests(ITranslatableContainer $container)
     {
@@ -106,9 +127,9 @@ class Translator
                 $item->setTranslation($cachedTranslation);
                 $i++;
             } else {
-                $request    = $this->createRequest($item);
-                $requests[] = $request;
-                $this->requestsHash->attach($request, $item);
+                $request                  = $this->createRequest($item);
+                $requests[$item->getId()] = $request;
+                $this->requestsHash->set($item->getId(), $item);
                 $j++;
             }
         }
@@ -131,7 +152,7 @@ class Translator
      * Desc
      *
      * @param ITranslatable $item
-     * @return \GuzzleHttp\Message\RequestInterface
+     * @return PromiseInterface
      */
     protected function createRequest(ITranslatable $item)
     {

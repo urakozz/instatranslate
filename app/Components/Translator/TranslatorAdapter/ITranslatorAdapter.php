@@ -15,7 +15,8 @@ namespace App\Components\Translator\TranslatorAdapter;
 
 use App\Components\Translator\ITranslatable;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Message\ResponseInterface;
+use GuzzleHttp\Promise\PromiseInterface;
+use Psr\Http\Message\ResponseInterface;
 
 interface ITranslatorAdapter
 {
@@ -25,5 +26,12 @@ interface ITranslatorAdapter
 
     public function getRequestAttributes(ITranslatable $item);
 
+    /**
+     * Desc
+     *
+     * @param ClientInterface $client
+     * @param ITranslatable $item
+     * @return PromiseInterface
+     */
     public function createRequest(ClientInterface $client, ITranslatable $item);
 }

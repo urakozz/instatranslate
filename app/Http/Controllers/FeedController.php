@@ -32,12 +32,15 @@ class FeedController extends Controller
     public function index()
     {
         \Session::set('next_max_id', null);
+//        var_dump(\Auth::getUser()->getToken());
+//        var_dump(\Auth::getUser()->getId());
         \Queue::push(new GetTranslations(\Auth::getUser()->getToken()));
         try {
             $data = $this->getPosts();
         } catch (\Exception $e) {
-            \Session::clear();
-            return redirect("/logout");
+//            \Session::clear();
+//            return redirect("/logout");
+            throw $e;
         }
         return view('feed', ['data' => $data]);
     }
@@ -74,12 +77,12 @@ class FeedController extends Controller
         }
 
 
-//        \Log::info('Translator call start');
-//        $t          = microtime(true);
-//        $translator = new Translator(Guzzle::getFacadeRoot(), new BingTranslator());
-//        $translator->setRepository(new TranslationRepositoryCache(new LaravelDoctrineCache()));
-//        $translator->translate(new InstagramAdapter($data));
-//        \Log::info(sprintf("Translator call end, time is %.04F", microtime(true) - $t));
+        \Log::info('Translator call start');
+        $t          = microtime(true);
+        $translator = new Translator(Guzzle::getFacadeRoot(), new BingTranslator());
+        $translator->setRepository(new TranslationRepositoryCache(new LaravelDoctrineCache()));
+        $translator->translate(new InstagramAdapter($data));
+        \Log::info(sprintf("Translator call end, time is %.04F", microtime(true) - $t));
 
         return $data;
     }
