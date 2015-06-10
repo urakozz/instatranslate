@@ -34,7 +34,7 @@ AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 |
 */
 
-if (file_exists($compiledPath = __DIR__.'/../vendor/compiled.php'))
+if (file_exists($compiledPath = __DIR__.'/cache/compiled.php'))
 {
 	require $compiledPath;
 }

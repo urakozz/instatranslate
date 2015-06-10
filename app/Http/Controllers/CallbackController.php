@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Commands\GetTranslations;
+use App\Jobs\GetTranslations;
 use App\Components\Storage\UserStorage;
 
 class CallbackController extends Controller

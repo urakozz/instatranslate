@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Commands\GetTranslations;
+use App\Jobs\GetTranslations;
 use App\Components\Translator\Adapters\InstagramAdapter;
 use App\Components\Translator\Repository\TranslationRepositoryCache;
 use App\Components\Translator\Translator;
@@ -32,8 +32,8 @@ class FeedController extends Controller
     public function index()
     {
         \Session::set('next_max_id', null);
-//        var_dump(\Auth::getUser()->getToken());
-//        var_dump(\Auth::getUser()->getId());
+        var_dump(\Auth::getUser()->getToken());
+        var_dump(\Auth::getUser()->getId());
         \Queue::push(new GetTranslations(\Auth::getUser()->getToken()));
         try {
             $data = $this->getPosts();

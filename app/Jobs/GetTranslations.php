@@ -1,6 +1,4 @@
-<?php namespace App\Commands;
-
-use App\Commands\Command;
+<?php namespace App\Jobs;
 
 use App\Components\Translator\Adapters\InstagramAdapter;
 use App\Components\Translator\Repository\TranslationRepositoryCache;
