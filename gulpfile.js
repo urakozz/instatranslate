@@ -1,4 +1,11 @@
 var elixir = require('laravel-elixir');
+//var gulp             = require('gulp');
+//var browserify       = require('browserify');
+//var reactify         = require('reactify');
+//var source           = require('vinyl-source-stream');
+//var buffer           = require('vinyl-buffer');
+//var sourcemaps       = require('gulp-sourcemaps');
+//var uglify 			 = require('gulp-uglify');
 
 
 var assets= './resources/assets/';
@@ -32,3 +39,15 @@ elixir(function (mix) {
         .copy(paths.bootstrap + 'fonts/bootstrap/**', 'public/build/fonts')
         .copy(paths.fontAwesome + 'fonts/**', 'public/build/fonts')
 });
+
+//gulp.task('react', function(){
+//    return browserify('./www/js/react/app.jsx', { debug: true })
+//        .transform(reactify)
+//        .bundle()
+//        .pipe(source('main.min.js'))
+//        .pipe(buffer())
+//        .pipe(sourcemaps.init({loadMaps: true}))
+//        .pipe(uglify())
+//        .pipe(sourcemaps.write('../maps'))
+//        .pipe(gulp.dest('./www/js/'));
+//});
